@@ -1,0 +1,40 @@
+{
+  "private": true,
+  "licenses": [
+    {
+      "type": "Widen Commercial License",
+      "url": "https://raw.githubusercontent.com/FineUploader/modern-uploader/LICENSE"
+    }
+  ],
+  "devDependencies": {
+    "babel-cli": "latest",
+    "babel-core": "latest",
+    "babel-loader": "latest",
+    "babel-plugin-rewire": "1.0.0-beta-5",
+    "babel-preset-es2015": "latest",
+    "babel-eslint": "latest",
+    "es6-promise": "latest",
+    "eslint": "latest",
+    "jasmine": "latest",
+    "jasmine-core": "latest",
+    "karma": "latest",
+    "karma-coverage": "latest",
+    "karma-firefox-launcher": "latest",
+    "karma-jasmine": "latest",
+    "karma-phantomjs-launcher": "latest",
+    "karma-sinon": "latest",
+    "karma-spec-reporter": "latest",
+    "karma-webpack": "latest",
+    "phantomjs-prebuilt": "latest",
+    "sinon": "latest",
+    "webpack": "latest"
+  },
+  "engines": {
+    "node": ">=5.0.0"
+  },
+  "scripts": {
+    "postinstall": "for packageDir in packages/*/; do (cd ${packageDir}; npm install); done",
+    "test": "karma start config/karma.conf.js",
+    "test-dev": "karma start config/karma.dev.conf.js"
+  }
+}

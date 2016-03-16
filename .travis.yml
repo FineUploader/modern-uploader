@@ -1,0 +1,16 @@
+addons:
+  firefox: latest
+sudo: false
+language: node_js
+node_js:
+- '5.0'
+env:
+  global:
+  - DISPLAY=:99.0
+before_script:
+- sh -e /etc/init.d/xvfb start
+notifications:
+  slack:
+    on_success: change
+    rooms:
+      secure: UOtSTJJgQ6OR3E2PQlfcmAjb9xrHWSNRlUMTpZ6AdAW1UCi51vqrkGXGJ0KQDju06LoLlPWVfA8J1RJVJE+vVUXOcIRv1esFpmJmS8yhOnbdzsbbjOpdPq0ihEh0qA9EecchZV+ILYRVXcuO6tH2ROWAXW2zqaYJfzhE/Ax7ZmH4DPpVUb6jpmdX50aLN0ejXnzD31WXDKvCa/oBvBZAqjx1EA6V83t9A50VKkLmE+FReQaWxXCuUoJg+Pfs5kFfOi1jAVWwq3A9kiPcQe+BJXdvOae1IOiQnik+kzPay8tYVINfg0xDxs1sIiXrZPY43NVIpJLq6ZT9J9Kp2k1hnLFBX8ooUNZ8/sigN/YaQu+1c6+A7yiY91RFk8dEgVemDlVdiLkhGkgrWZMWyW4v/WGb3k6FoPiAW+TizOPRMvg7QGDTc52mMtS6HrXRMZge498ELbl7H0oA9JNpBp8fkXl7w1LVUH84klNVSjZpTHRXjk46wGSypfsOpoyby4zXMku8XAlmALg0IwDnwOhh+XIRBwp+I3zNiHgmZYF3N1UQqldi/0ICixmxbJMbDatymL5gvP960N/b9T0o7Ub3V9/WzlzdsrHIZ8bPOvn8YdmHMFMuLHjN753c5sjmPZQFUK9wo+hTHMGoEJu7Iig8xvSK7eVa8qqPSeDx5dNu/Og=

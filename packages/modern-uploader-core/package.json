@@ -10,7 +10,7 @@
       "url": "https://raw.githubusercontent.com/FineUploader/modern-uploader/LICENSE"
     }
   ],
-  "repository": "https://github.com/FineUploader/modern-uploader/tree/master/packages/modern-uploader-cor",
+  "repository": "https://github.com/FineUploader/modern-uploader/tree/master/packages/modern-uploader-core",
   "keywords": [
     "file",
     "blob",

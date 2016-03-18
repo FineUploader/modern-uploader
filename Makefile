@@ -1,7 +1,7 @@
 NPM_BIN = $(shell npm bin)
 
 cleanMergeDocs:
-	git merge -s ours gh-pages --no-edit
+	git merge -s ours origin/gh-pages --no-edit
 	git checkout gh-pages
 	rm -rf docs
 	cp -pR _docs docs

@@ -4,7 +4,7 @@ cleanMergeDocs:
 	git merge -s ours origin/gh-pages --no-edit
 	git checkout gh-pages
 	rm -rf docs
-	cp -pR _docs/ docs
+	cp -pR _docs docs
 
 commitDocsOnly:
 	git add docs
@@ -15,7 +15,7 @@ docs:
 	for packageDir in packages/*/ ; do \
 		$(NPM_BIN)/jsdoc $$packageDir -r -d _docs/$$packageDir --readme $$packageDir/README.md ; \
 	done
-	cp -pR docs-static/ _docs
+	cp -pR docs-static/* _docs
 
 publishDocs: travisDocsSetup docs cleanMergeDocs commitDocsOnly
 	git push origin gh-pages

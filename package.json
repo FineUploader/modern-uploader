@@ -17,6 +17,7 @@
     "eslint": "latest",
     "jasmine": "latest",
     "jasmine-core": "latest",
+    "jsdoc": "latest",
     "karma": "latest",
     "karma-coverage": "latest",
     "karma-firefox-launcher": "latest",

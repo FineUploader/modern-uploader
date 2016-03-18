@@ -1,4 +1,9 @@
-export default class ModernUploaderCore {
+/** Main class for core plug-in */
+class ModernUploaderCore {
+    /**
+     * Loads an array of plug-ins.
+     * @param plugins An array of Plugin object instances.
+     */
     constructor(plugins = []) {
         if (plugins.length) {
             this._loadPlugins(plugins)
@@ -43,3 +48,5 @@ export default class ModernUploaderCore {
         )
     }
 }
+
+export default ModernUploaderCore

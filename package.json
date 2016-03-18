@@ -34,7 +34,7 @@
   },
   "scripts": {
     "postinstall": "for packageDir in packages/*/; do (cd ${packageDir}; npm install); done",
-    "test": "karma start config/karma.conf.js",
+    "test": "eslint packages/. --ext .js; karma start config/karma.conf.js",
     "test-dev": "karma start config/karma.dev.conf.js"
   }
 }

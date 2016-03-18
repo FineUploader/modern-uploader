@@ -4,7 +4,7 @@ cleanMergeDocs:
 	git merge -s ours origin/gh-pages --no-edit
 	git checkout gh-pages
 	rm -rf docs
-	cp -pR _docs docs
+	cp -pR _docs/ docs
 
 commitDocsOnly:
 	git add docs
@@ -19,8 +19,6 @@ docs:
 
 publishDocs: travisDocsSetup docs cleanMergeDocs commitDocsOnly
 	git push origin gh-pages
-	git checkout master
-	rm -rf docs
 
 travisDocsSetup:
 	git config user.name "Modern Uploader Travis-CI agent"

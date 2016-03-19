@@ -10,6 +10,7 @@ var path = require('path'),
         sl_firefox: {
             base: 'SauceLabs',
             browserName: 'firefox',
+            platform: 'Windows 10',
             version: 'latest'
         },
         sl_ios_safari: {

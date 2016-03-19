@@ -7,6 +7,11 @@ var path = require('path'),
             platform: 'Windows 7',
             version: 'latest'
         },
+        sl_firefox: {
+            base: 'SauceLabs',
+            browserName: 'firefox',
+            version: 'latest'
+        },
         sl_ios_safari: {
             base: 'SauceLabs',
             browserName: 'iphone',
@@ -38,7 +43,6 @@ webpackConfig.module.loaders[0].query.plugins = ['rewire'];
 module.exports = function (config) {
     config.set({
         basePath: '',
-        browsers: ['Firefox', 'PhantomJS'],
         files: [
             path.resolve('test/tests.bundle.js')
         ],

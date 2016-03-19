@@ -1,5 +1,6 @@
 # Modern Uploader
 [![Build Status](https://travis-ci.org/FineUploader/modern-uploader.svg?branch=master)](https://travis-ci.org/FineUploader/modern-uploader)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/modernuploader.svg)](https://saucelabs.com/u/modernuploader)
 
 A modern and highly extensible JavaScript file upload library with support for all servers and applications
 

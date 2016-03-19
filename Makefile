@@ -24,10 +24,11 @@ publishDocs: travisDocsSetup docs cleanMergeDocs commitDocsOnly
 	git push origin gh-pages
 
 test: lint
+ifeq ($(CI), true)
 	$(NPM_BIN)/karma start config/karma.conf.js
-
-testDev: lint
+else
 	$(NPM_BIN)/karma start config/karma.dev.conf.js
+endif
 
 travisDocsSetup:
 	git config user.name "Modern Uploader Travis-CI agent"

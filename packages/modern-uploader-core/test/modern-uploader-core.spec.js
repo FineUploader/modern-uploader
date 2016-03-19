@@ -1,5 +1,4 @@
-import Core from 'core/src/modern-uploader-core'
-import Plugin from 'core/src/plugin'
+import Core, {Plugin} from 'core'
 
 class DummyPlugin extends Plugin {
     constructor(name, loadFunction) {

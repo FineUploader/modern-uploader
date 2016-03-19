@@ -6,7 +6,7 @@ webpackConfig.module.loaders[0].query.plugins = ['rewire'];
 module.exports = function (config) {
     defaultConfig(config)
     config.set({
-        browsers: ['PhantomJS', 'Firefox'],
+        browsers: ['Firefox'],
         reporters: ['spec'],
         webpack: webpackConfig
     });

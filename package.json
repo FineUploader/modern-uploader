@@ -22,13 +22,11 @@
     "karma-coverage": "latest",
     "karma-firefox-launcher": "latest",
     "karma-jasmine": "latest",
-    "karma-phantomjs-launcher": "latest",
     "karma-sauce-launcher": "latest",
     "karma-sinon": "latest",
     "karma-sourcemap-loader": "latest",
     "karma-spec-reporter": "latest",
     "karma-webpack": "latest",
-    "phantomjs-prebuilt": "latest",
     "sinon": "latest",
     "webpack": "latest"
   },

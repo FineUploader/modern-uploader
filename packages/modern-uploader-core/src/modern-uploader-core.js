@@ -38,8 +38,8 @@ class ModernUploaderCore extends Plugin {
         }
         catch(error) {
             return new Promise((resolve, reject) => {
+                error.message += ` Plug-in '${plugin.name}' failed to load.`
                 reject(error)
-                console.error(`Plug-in ${plugin.name} failed to load.`)
             })
         }
     }

@@ -1,6 +1,8 @@
+const privates = new WeakMap()
+
 class Plugin {
     constructor(name = this.constructor.name) {
-        this._name = name
+        privates.set(this, {name: name})
     }
 
     load() {
@@ -8,7 +10,7 @@ class Plugin {
     }
 
     get name() {
-        return this._name
+        return privates.get(this).name
     }
 }
 

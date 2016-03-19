@@ -24,7 +24,7 @@ class Plugin {
      * @abstract
      */
     load() {
-        throw new Error('Plug-in load method not properly implemented.')
+        throw new Error(`Plugin '${this.name}' is not meant to be loaded!`)
     }
 
     /**

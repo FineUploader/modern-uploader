@@ -25,6 +25,7 @@
     "karma-phantomjs-launcher": "latest",
     "karma-sauce-launcher": "latest",
     "karma-sinon": "latest",
+    "karma-sourcemap-loader": "latest",
     "karma-spec-reporter": "latest",
     "karma-webpack": "latest",
     "phantomjs-prebuilt": "latest",

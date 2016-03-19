@@ -40,6 +40,7 @@ var path = require('path'),
     }
 
 webpackConfig.module.loaders[0].query.plugins = ['rewire'];
+webpackConfig.devtool = 'inline-source-map'
 
 module.exports = function (config) {
     config.set({
@@ -55,11 +56,12 @@ module.exports = function (config) {
             'karma-firefox-launcher',
             'karma-phantomjs-launcher',
             'karma-sauce-launcher',
+            'karma-sourcemap-loader',
             'karma-sinon'
         ],
         preprocessors: (function() {
             var preprocessors = {}
-            preprocessors[path.resolve('test/tests.bundle.js')] = 'webpack'
+            preprocessors[path.resolve('test/tests.bundle.js')] = ['webpack', 'sourcemap']
             return preprocessors
         }()),
         sauceLabs: {

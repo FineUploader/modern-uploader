@@ -1,22 +1,35 @@
 import Core from 'core/src/modern-uploader-core'
+import Plugin from 'core/src/plugin'
 
-class Plugin {
+class DummyPlugin extends Plugin {
     constructor(name, loadFunction) {
-        this.name = name
+        super(name)
         this.load = loadFunction
     }
 }
 
 describe('Core plug-in loader', () => {
+    it('does not attempt to load plugins if one of them does not extend Plugin', () => {
+        class PlainOleClass {}
+
+        expect(() => {
+            new Core([
+                new DummyPlugin('one', () => {}),
+                new PlainOleClass(),
+                new DummyPlugin('three', () => {})
+            ])
+        }).toThrow()
+    })
+
     it('loads all plug-ins that return nothing on load()', (done) => {
         const loadedOrder = []
 
         new Core([
-            new Plugin('one', () => {loadedOrder.push('one')}),
+            new DummyPlugin('one', () => {loadedOrder.push('one')}),
 
-            new Plugin('two', () => {loadedOrder.push('two')}),
+            new DummyPlugin('two', () => {loadedOrder.push('two')}),
 
-            new Plugin('three', () => {
+            new DummyPlugin('three', () => {
                 loadedOrder.push('three')
                 expect(loadedOrder).toEqual(['one', 'two', 'three'])
                 done()
@@ -28,9 +41,9 @@ describe('Core plug-in loader', () => {
         const loadedOrder = []
 
         new Core([
-            new Plugin('one', () => {loadedOrder.push('one')}),
+            new DummyPlugin('one', () => {loadedOrder.push('one')}),
 
-            new Plugin('two', () => {
+            new DummyPlugin('two', () => {
                 loadedOrder.push('two')
                 setTimeout(() => {
                     expect(loadedOrder).toEqual(['one', 'two'])
@@ -39,7 +52,7 @@ describe('Core plug-in loader', () => {
                 throw new Error('Test plug-in load failure.')
             }),
 
-            new Plugin('three', () => {loadedOrder.push('three')})
+            new DummyPlugin('three', () => {loadedOrder.push('three')})
         ])
     })
 
@@ -47,21 +60,21 @@ describe('Core plug-in loader', () => {
         const loadedOrder = []
 
         new Core([
-            new Plugin('one', () => {
+            new DummyPlugin('one', () => {
                 return new Promise(resolve => {
                     loadedOrder.push('one')
                     resolve()
                 })
             }),
 
-            new Plugin('two', () => {
+            new DummyPlugin('two', () => {
                 return new Promise(resolve => {
                     loadedOrder.push('two')
                     resolve()
                 })
             }),
 
-            new Plugin('three', () => {
+            new DummyPlugin('three', () => {
                 return new Promise(resolve => {
                     loadedOrder.push('three')
                     expect(loadedOrder).toEqual(['one', 'two', 'three'])
@@ -76,14 +89,14 @@ describe('Core plug-in loader', () => {
         const loadedOrder = []
 
         new Core([
-            new Plugin('one', () => {
+            new DummyPlugin('one', () => {
                 return new Promise(resolve => {
                     loadedOrder.push('one')
                     resolve()
                 })
             }),
 
-            new Plugin('two', () => {
+            new DummyPlugin('two', () => {
                 return new Promise((resolve, reject) => {
                     loadedOrder.push('two')
                     reject('Test plug-in load failure.')
@@ -94,7 +107,7 @@ describe('Core plug-in loader', () => {
                 })
             }),
 
-            new Plugin('three', () => {
+            new DummyPlugin('three', () => {
                 return new Promise(resolve => {
                     loadedOrder.push('three')
                     resolve()

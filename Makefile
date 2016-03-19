@@ -17,8 +17,17 @@ docs:
 	done
 	cp -pR docs-static/* _docs
 
+lint:
+	$(NPM_BIN)/eslint packages/. --ext .js
+
 publishDocs: travisDocsSetup docs cleanMergeDocs commitDocsOnly
 	git push origin gh-pages
+
+test: lint
+	$(NPM_BIN)/karma start config/karma.conf.js
+
+testDev: lint
+	$(NPM_BIN)/karma start config/karma.dev.conf.js
 
 travisDocsSetup:
 	git config user.name "Modern Uploader Travis-CI agent"

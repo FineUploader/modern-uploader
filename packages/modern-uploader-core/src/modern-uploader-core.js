@@ -1,10 +1,18 @@
 import Plugin from './plugin'
 
-/** Main class for core plug-in */
+/**
+ * Main class for core plug-in.
+ *
+ * @extends Plugin
+ * @since 0.0.0
+ */
 class ModernUploaderCore extends Plugin {
     /**
      * Loads an array of plug-ins.
-     * @param plugins An array of Plugin object instances.
+     *
+     * @param {Array} plugins - Plugin object instances.
+     * @throws {Error} If one of the passes plug-ins does not extend Plugin.
+     * @since 0.0.0
      */
     constructor(plugins = []) {
         super('core')

@@ -13,7 +13,7 @@ var path = require('path'),
             platform: 'OS X 10.11',
             version: '9.0'
         },
-        sl_ios_safari: {
+        sl_osx_safari: {
             base: 'SauceLabs',
             browserName: 'Safari',
             platform: 'OS X 10.11',
@@ -49,6 +49,7 @@ module.exports = function (config) {
             'karma-jasmine',
             'karma-firefox-launcher',
             'karma-phantomjs-launcher',
+            'karma-sauce-launcher',
             'karma-sinon'
         ],
         preprocessors: (function() {

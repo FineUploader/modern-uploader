@@ -49,15 +49,6 @@ module.exports = function (config) {
             path.resolve('test/tests.bundle.js')
         ],
         frameworks: ['jasmine', 'sinon'],
-        plugins: [
-            require('karma-webpack'),
-            'karma-spec-reporter',
-            'karma-jasmine',
-            'karma-firefox-launcher',
-            'karma-sauce-launcher',
-            'karma-sourcemap-loader',
-            'karma-sinon'
-        ],
         preprocessors: (function() {
             var preprocessors = {}
             preprocessors[path.resolve('test/tests.bundle.js')] = ['webpack', 'sourcemap']

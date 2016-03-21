@@ -53,5 +53,4 @@ function loadPlugins(plugins, index = 0) {
     )
 }
 
-
 export default load

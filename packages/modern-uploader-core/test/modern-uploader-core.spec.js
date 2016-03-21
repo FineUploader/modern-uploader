@@ -8,6 +8,12 @@ class DummyPlugin extends Plugin {
 }
 
 describe('Core plug-in loader', () => {
+    it('throws if no plug-ins are passed', () => {
+        expect(() => {
+            new Core()
+        }).toThrow()
+    })
+
     it('does not attempt to load plugins if one of them does not extend Plugin', () => {
         class PlainOleClass {}
 

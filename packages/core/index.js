@@ -1,4 +1,4 @@
-import ModernUploaderCore from './src/modern-uploader-core'
+import ModernUploaderCore from './src/core'
 import Plugin from './src/plugin'
 
 export {Plugin}

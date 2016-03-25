@@ -1,5 +1,5 @@
 {
-  "name": "modern-uploader-core",
+  "name": "@modern-uploader/core",
   "version": "0.0.0",
   "description": "Core module for Modern Uploader",
   "author": "Widen Enterprises, Inc.",
@@ -10,7 +10,7 @@
       "url": "https://raw.githubusercontent.com/FineUploader/modern-uploader/LICENSE"
     }
   ],
-  "repository": "https://github.com/FineUploader/modern-uploader/tree/master/packages/modern-uploader-core",
+  "repository": "https://github.com/FineUploader/modern-uploader/tree/master/packages/core",
   "keywords": [
     "file",
     "blob",

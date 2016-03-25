@@ -8,6 +8,13 @@ const listeners = new WeakMap()
  *
  * @extends Plugin
  * @since 0.0.0
+ * @example
+ * import Core from 'core'
+ *
+ * const modernUploader = new Core([
+ *    new SomePlugin1(),
+ *    new SomePlugin2()
+ * ])
  */
 class ModernUploaderCore extends Plugin {
     /**
@@ -16,13 +23,6 @@ class ModernUploaderCore extends Plugin {
      * @param {Array} plugins - Plugin object instances.
      * @throws {Error} If one of the passed plug-ins does not extend Plugin or if no plug-ins are passed.
      * @since 0.0.0
-     * @example
-     * import Core from 'modern-uploader-core'
-     *
-     * const modernUploader = new Core([
-     *    new SomePlugin1(),
-     *    new SomePlugin2()
-     * ])
      */
     constructor(plugins = []) {
         super('core')
@@ -62,6 +62,7 @@ class ModernUploaderCore extends Plugin {
      * )
      */
     fire(type, payload) {
+        console.log(`TODO: deliver event to all handlers and process result for ${type} with payload ${payload}.`)
     }
 
     /**

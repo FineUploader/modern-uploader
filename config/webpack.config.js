@@ -3,7 +3,7 @@ var path = require('path')
 module.exports = {
     resolve: {
         alias: {
-            core: path.resolve('packages/modern-uploader-core')
+            core: path.resolve('packages/core')
         }
     },
     module: {

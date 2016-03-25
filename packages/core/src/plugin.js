@@ -28,7 +28,9 @@ class Plugin {
     }
 
     /**
-     * @returns {string} A name for this plug-in.
+     * A name for this plug-in.
+     *
+     * @type {string}
      * @since 0.0.0
      * @readonly
      */

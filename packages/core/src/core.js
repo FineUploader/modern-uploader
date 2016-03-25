@@ -1,5 +1,5 @@
-import Plugin from './plugin'
 import loadPlugins from './plugin-loader'
+import Plugin from './plugin'
 
 const listeners = new WeakMap()
 
@@ -34,11 +34,10 @@ class ModernUploaderCore extends Plugin {
      * Trigger an event to be passed to all other registered event listeners. This event will be
      * bubbled, starting with the first registered listener, and ending with the last.
      *
-     * @param type Type of event to fire.
-     * @param payload Data associated with this event, to be passed to all registered listeners.
+     * @param event {Event} event to pass to all registered listeners for this event type.
      * @returns Promise Once the event has been bubbled to all registered listeners,
      * the result will be returned by resolving or rejecting this returned Promise, depending on the outcome.
-     * If the event is cancelled by a listenered, this Promise will be rejected with any data provided
+     * If the event is cancelled by a listener, this Promise will be rejected with any data provided
      * by the cancelling listener. If this event is not cancelled, any data provided by all listeners
      * will be included when resolving the returned Promise.
      * @since 0.0.0
@@ -50,7 +49,7 @@ class ModernUploaderCore extends Plugin {
      * // But some other plug-in could also prevent this add
      * // from happening before it reaches the core plug-in
      * // (perhaps a validator plug-in, for example).
-     * core.fire('add', item).then(
+     * core.fire(addEvent).then(
      *    function added() {
      *       // the item was added, either handle or ignore
      *    },
@@ -61,8 +60,17 @@ class ModernUploaderCore extends Plugin {
      *    }
      * )
      */
-    fire(type, payload) {
-        console.log(`TODO: deliver event to all handlers and process result for ${type} with payload ${payload}.`)
+    fire(event) {
+        const myListenersForType = listeners.get(this)[event.type]
+        if (myListenersForType) {
+            for (let index = myListenersForType.length - 1; index >= 0; index--) {
+                const listener = myListenersForType[index]
+                listener(event)
+                // TODO handle listener return value and call subsequent listeners
+            }
+        }
+
+        return new Promise(resolve => resolve())
     }
 
     /**

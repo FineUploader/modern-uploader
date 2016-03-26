@@ -81,12 +81,11 @@ class Event {
     }
 
     /**
-     * A value to be passed on to the next registered listener or to the entity
-     * that triggered the event. This is typically only called by the low-level
-     * mechanism that is charged with passing the event among all interested listeners.
+     * Data provided by the previous event handler.
      *
      * @since 0.0.0
      * @type {*|undefined}
+     * @readonly
      */
     get result() {
         return data.get(this).result

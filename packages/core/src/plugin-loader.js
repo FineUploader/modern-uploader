@@ -1,3 +1,4 @@
+import Event from './event'
 import Plugin from './plugin'
 
 function checkPluginTypes(plugins) {
@@ -8,19 +9,19 @@ function checkPluginTypes(plugins) {
     })
 }
 
-function load(plugins) {
+function load(plugins, api) {
     if (plugins.length) {
         checkPluginTypes(plugins)
-        loadPlugins(plugins)
+        loadPlugins(plugins, {api})
     }
     else {
         throw new Error('No plug-ins to load!')
     }
 }
 
-function loadPlugin(plugin) {
+function loadPlugin(plugin, api) {
     try {
-        const returnValue = plugin.load()
+        const returnValue = plugin.load(api)
 
         if (returnValue instanceof Promise) {
             return returnValue
@@ -36,14 +37,17 @@ function loadPlugin(plugin) {
     }
 }
 
-function loadPlugins(plugins, index = 0) {
+function loadPlugins(plugins, {api, index = 0}) {
     const plugin = plugins[index]
 
-    loadPlugin(plugin).then(
+    loadPlugin(plugin, api).then(
         function() {
             let nextIndex = index + 1
             if (nextIndex < plugins.length) {
-                loadPlugins(plugins, nextIndex)
+                loadPlugins(plugins, {api, index: nextIndex})
+            }
+            else {
+                api.fire(new Event({type: 'allModulesLoaded'}))
             }
         },
 

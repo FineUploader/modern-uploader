@@ -1,3 +1,4 @@
+import deliverEvent from './event-handler'
 import loadPlugins from './plugin-loader'
 import Plugin from './plugin'
 
@@ -16,7 +17,7 @@ const listeners = new WeakMap()
  *    new SomePlugin2()
  * ])
  */
-class ModernUploaderCore extends Plugin {
+class Core extends Plugin {
     /**
      * Loads an array of plug-ins.
      *
@@ -26,8 +27,8 @@ class ModernUploaderCore extends Plugin {
      */
     constructor(plugins = []) {
         super('core')
-
-        loadPlugins(plugins)
+        listeners.set(this, {})
+        loadPlugins(plugins, this)
     }
 
     /**
@@ -62,15 +63,7 @@ class ModernUploaderCore extends Plugin {
      */
     fire(event) {
         const myListenersForType = listeners.get(this)[event.type]
-        if (myListenersForType) {
-            for (let index = myListenersForType.length - 1; index >= 0; index--) {
-                const listener = myListenersForType[index]
-                listener(event)
-                // TODO handle listener return value and call subsequent listeners
-            }
-        }
-
-        return new Promise(resolve => resolve())
+        return deliverEvent(event, myListenersForType)
     }
 
     /**
@@ -107,6 +100,7 @@ class ModernUploaderCore extends Plugin {
 
             typeListeners.push(listener)
             myListeners[type] = typeListeners
+            listeners.set(this, myListeners)
         }
         else {
             Object.keys(typeOrListenersObject).forEach(type => {
@@ -116,4 +110,4 @@ class ModernUploaderCore extends Plugin {
     }
 }
 
-export default ModernUploaderCore
+export default Core

@@ -21,7 +21,7 @@ class Event {
      *
      * @param {Object} eventData
      * @param {boolean} [eventData.informational=false]
-     * @param {*} eventData.payload Data associated with this event
+     * @param {*} [eventData.payload] Data associated with this event
      * from the entity that triggered the event.
      * @param {string} eventData.type Type of event to fire.
      * @since 0.0.0

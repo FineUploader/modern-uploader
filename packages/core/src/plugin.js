@@ -15,7 +15,9 @@ class Plugin {
     }
 
     /**
-     * Called to load this specific plug-in. All setup logic, async or sync, should be completed as part of handling this call.
+     * Called to load this specific plug-in. All setup logic, async or sync,
+     * should be completed as part of handling this call. For example, register
+     * event handlers here.
      *
      * @param {Core} api API for core module.
      * @returns {null|undefined|Promise} If a Promise is returned, resolve or reject once the outcome is known.
@@ -23,6 +25,12 @@ class Plugin {
      * @throws {Error} If there is an immediate issue loading the plug-in.
      * @since 0.0.0
      * @abstract
+     * @example
+     * load(api) {
+     *    api.on('add', event => {
+     *       // handle "add" event
+     *    })
+     * }
      */
     load(api) { // eslint-disable-line no-unused-vars
         throw new Error(`Plugin '${this.name}' is not meant to be loaded!`)

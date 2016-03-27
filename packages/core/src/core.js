@@ -50,14 +50,21 @@ class Core extends Plugin {
      * // But some other plug-in could also prevent this add
      * // from happening before it reaches the core plug-in
      * // (perhaps a validator plug-in, for example).
-     * core.fire(addEvent).then(
-     *    function added() {
-     *       // the item was added, either handle or ignore
+     * core.fire(
+     *    new Event({
+     *       type: 'add',
+     *       payload: {
+     *          item: someFile
+     *       }
+     *    })
+     * )
+     * .then(
+     *    function added(event) {
+     *       // the item was added
      *    },
      *
-     *    function notAdded(reason) {
+     *    function notAdded(event) {
      *       // something prevented item from being added
-     *       // deal with this, such as by logging the reason
      *    }
      * )
      */

@@ -145,7 +145,7 @@ describe('Core', () => {
 
                 setTimeout(() => {
                     core.on('allModulesLoaded', () => done())
-                }, 30)
+                }, 29)
             })
 
             it('calls handlers in correcr order - sync module loaders w/ sync event handlers', (done) => {

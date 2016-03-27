@@ -25,12 +25,12 @@ var path = require('path'),
             platform: 'OS X 10.11',
             version: '9.0'
         },
-        sl_ie_11: {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 10',
-            version: '11.103'
-        },
+        // sl_ie_11: {
+        //     base: 'SauceLabs',
+        //     browserName: 'internet explorer',
+        //     platform: 'Windows 8.1',
+        //     version: '11'
+        // },
         sl_edge: {
             base: 'SauceLabs',
             browserName: 'microsoftedge',

@@ -69,8 +69,8 @@ class Core extends Plugin {
      * )
      */
     fire(event) {
-        const myListenersForType = listeners.get(this)[event.type]
-        return deliverEvent(event, myListenersForType)
+        const myListeners = listeners.get(this)
+        return deliverEvent(event, myListeners)
     }
 
     /**
@@ -114,6 +114,18 @@ class Core extends Plugin {
                 this.on(type, typeOrListenersObject[type])
             })
         }
+    }
+
+    /**
+     * Register a listener for all events. This may be useful for plug-ins that need to be notified
+     * whenever any event is triggered in the system. A good example would be a plug-in that logs all
+     * activity.
+     *
+     * @param listener
+     */
+    onAll(listener) {
+        const myListeners = listeners.get(this)
+        Object.keys(myListeners).concat('*').forEach(type => this.on(type, listener))
     }
 }
 

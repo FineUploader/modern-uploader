@@ -1,6 +1,7 @@
 function deliverEvent(event, listeners) {
-    if (listeners) {
-        return deliverEventToListener(event, Object.assign([], listeners))
+    const listenersForEventType = listeners[event.type] || listeners['*']
+    if (listenersForEventType) {
+        return deliverEventToListener(event, Object.assign([], listenersForEventType))
     }
 
     return new Promise(resolve => resolve(event))

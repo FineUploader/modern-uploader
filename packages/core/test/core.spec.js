@@ -187,19 +187,75 @@ describe('Core', () => {
                 }, 29)
             })
 
-            it('calls handlers in correcr order - sync module loaders w/ sync event handlers', (done) => {
+            it('calls handlers in correct order - sync module loaders w/ sync event handlers', (done) => {
                 const callbacks = []
 
                 new Core([
                     new DummyPlugin('one', api => {
                         api.on('allModulesLoaded', () => {
                             callbacks.push('one')
-                            expect(callbacks).toEqual(['two', 'one'])
+                            expect(callbacks).toEqual(['three', 'two', 'one'])
                             done()
                         })
                     }),
                     new DummyPlugin('two', api => {
                         api.on('allModulesLoaded', () => callbacks.push('two'))
+                    }),
+                    new DummyPlugin('three', api => {
+                        api.on('allModulesLoaded', () => callbacks.push('three'))
+                    })
+                ])
+            })
+
+            it('calls handlers in correct order - w/ a handler registered for all events', (done) => {
+                const callbacks = []
+
+                new Core([
+                    new DummyPlugin('one', api => {
+                        api.on('test-event', () => {
+                            callbacks.push('one')
+                            expect(callbacks).toEqual(['three', 'two', 'one'])
+                            done()
+                        })
+                    }),
+                    new DummyPlugin('two', api => {
+                        api.onAll(event => {
+                            if (event.type === 'test-event') {
+                                callbacks.push('two')
+                            }
+                        })
+                    }),
+                    new DummyPlugin('three', api => {
+                        api.on('test-event', () => {
+                            callbacks.push('three')
+                        })
+                    }),
+                    new DummyPlugin('four', api => {
+                        api.on('allModulesLoaded', () => {
+                            api.fire(new Event({type: 'test-event'}))
+                        })
+                    })
+                ])
+            })
+
+            it('calls handler registered for all events, even without any other specifically registered listeners', (done) => {
+                const eventsHandled = []
+
+                new Core([
+                    new DummyPlugin('one', api => {
+                        api.onAll(event => {
+                            eventsHandled.push(event.type)
+                            if (eventsHandled.length === 2) {
+                                expect(eventsHandled).toEqual(['test-event', 'test-event2'])
+                                done()
+                            }
+                        })
+                    }),
+                    new DummyPlugin('two', api => {
+                        api.on('allModulesLoaded', () => {
+                            api.fire(new Event({type: 'test-event'}))
+                            api.fire(new Event({type: 'test-event2'}))
+                        })
                     })
                 ])
             })

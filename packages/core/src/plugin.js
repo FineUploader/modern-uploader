@@ -21,15 +21,42 @@ class Plugin {
      *
      * @param {Core} api API for core module.
      * @returns {null|undefined|Promise} If a Promise is returned, resolve or reject once the outcome is known.
-     * Otherwise, return nothing for success or throw for failure.
+     * Otherwise, return nothing for success or throw for failure. To override existing
+     * API methods, or provide new API methods, simply return an object (or pass one
+     * through your call to resolve the returned Promise). Any new or overridden methods
+     * will be available to all other plug-ins.
      * @throws {Error} If there is an immediate issue loading the plug-in.
      * @since 0.0.0
      * @abstract
      * @example
+     * // simple load implementation
      * load(api) {
      *    api.on('add', event => {
      *       // handle "add" event
      *    })
+     * }
+     *
+     * // adding a new API method
+     * load(api) {
+     *    return {
+     *       sayHi: () => 'hi'
+     *    }
+     * }
+     *
+     * // overriding an existing API method
+     * load(api) {
+     *    // Always do this to ensure the original
+     *    // method that you are overriding maintains
+     *    // access to its expected context. Only
+     *    // needed if you intend to call the original
+     *    // method in the new method.
+     *    const oldSayHi = api.add.bind(api)
+     *
+     *    return {
+     *       sayHi: () => {
+     *          return oldSayHi() + ' you!'
+     *       }
+     *    }
      * }
      */
     load(api) { // eslint-disable-line no-unused-vars

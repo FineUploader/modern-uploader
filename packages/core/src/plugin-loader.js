@@ -27,7 +27,7 @@ function loadPlugin(plugin, api) {
             return returnValue
         }
 
-        return new Promise(resolve => resolve())
+        return new Promise(resolve => resolve(returnValue))
     }
     catch(error) {
         return new Promise((resolve, reject) => {
@@ -41,7 +41,11 @@ function loadPlugins(plugins, {api, index = 0}) {
     const plugin = plugins[index]
 
     loadPlugin(plugin, api).then(
-        function() {
+        function(returnValue) {
+            if (typeof returnValue === 'object') {
+                Object.assign(api, returnValue)
+            }
+
             let nextIndex = index + 1
             if (nextIndex < plugins.length) {
                 loadPlugins(plugins, {api, index: nextIndex})

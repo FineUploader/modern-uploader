@@ -121,6 +121,45 @@ describe('Core', () => {
                 })
             ])
         })
+
+        it('allows plug-ins to extend the API simply by returning new methods', (done) => {
+            new Core([
+                new DummyPlugin('one', () => {
+                    return {
+                        returnOne: () => 'one'
+                    }
+                }),
+
+                new DummyPlugin('two', (api) => {
+                    const oldReturnOne = api.returnOne.bind(api)
+                    const oldFire = api.fire.bind(api)
+
+                    return {
+                        fire: (event) => {
+                            event.override_test = true
+                            return oldFire(event)
+                        },
+                        returnOne: () => {
+                            return oldReturnOne() + '1'
+                        }
+                    }
+                }),
+
+                new DummyPlugin('three', (api) => {
+                    api.on('allModulesLoaded', () => {
+                        expect(api.returnOne()).toBe('one1')
+
+                        api.fire(
+                            new Event({type: 'api-override-test'})
+                        )
+                        .then(event => {
+                            expect(event.override_test).toBe(true)
+                            done()
+                        })
+                    })
+                })
+            ])
+        })
     })
     
     describe('event handling', () => {
@@ -381,6 +420,4 @@ describe('Core', () => {
             })
         })
     })
-
-    // TODO allows API to be extended by modules via load method
 })

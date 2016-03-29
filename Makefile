@@ -1,5 +1,10 @@
 NPM_BIN = $(shell npm bin)
 
+build:
+	$(NPM_BIN)/webpack --config config/webpack.config.js &
+	export NODE_ENV=production; \
+	$(NPM_BIN)/webpack --config config/webpack.config.js -p
+
 cleanMergeDocs:
 	git merge -s ours origin/gh-pages --no-edit
 	git checkout gh-pages
@@ -18,7 +23,7 @@ docs:
 	cp -pR docs-static/* _docs
 
 lint:
-	$(NPM_BIN)/eslint packages/. --ext .js
+	$(NPM_BIN)/eslint packages/. --ext .js --cache
 
 publishDocs: travisDocsSetup docs cleanMergeDocs commitDocsOnly
 	git push origin gh-pages

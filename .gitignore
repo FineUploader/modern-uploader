@@ -1,3 +1,5 @@
+.eslintcache
 .idea
+_dist
 _docs
 node_modules

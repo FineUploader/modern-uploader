@@ -1,5 +1,6 @@
 .eslintcache
 .idea
-_dist
 _docs
+dist
+lib
 node_modules

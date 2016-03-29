@@ -1,9 +1,16 @@
 NPM_BIN = $(shell npm bin)
 
-build:
+build: buildLib buildDist
+
+buildDist:
 	$(NPM_BIN)/webpack --config config/webpack.config.js &
 	export NODE_ENV=production; \
 	$(NPM_BIN)/webpack --config config/webpack.config.js -p
+
+buildLib:
+	for packageDir in packages/*/ ; do \
+		$(NPM_BIN)/babel $$packageDir/src --out-dir $$packageDir/lib ; \
+	done
 
 cleanMergeDocs:
 	git merge -s ours origin/gh-pages --no-edit

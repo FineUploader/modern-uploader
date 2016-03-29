@@ -3,15 +3,15 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
     entry: {
-        core: [path.resolve('packages/core')]
+        core: [path.resolve('packages/core/src')]
     },
     output: {
         path: path.resolve('packages'),
-        filename: `[name]/_dist/[name].${isProduction ? 'min.js' : '.js'}`
+        filename: `[name]/dist/[name].${isProduction ? 'min.js' : '.js'}`
     },
     resolve: {
         alias: {
-            core: path.resolve('packages/core')
+            core: path.resolve('packages/core/src')
         }
     },
     module: {
@@ -19,10 +19,7 @@ module.exports = {
             {
                 test: /\.js/,
                 loader: 'babel',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['es2015']
-                }
+                exclude: /node_modules/
             }
         ]
     },

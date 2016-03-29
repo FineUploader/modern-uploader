@@ -301,7 +301,7 @@ const modernUploader = new Core([
 
     
 
-    <h4 class="name" id="fire"><span class="type-signature"></span>fire<span class="signature">(event)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="fire"><span class="type-signature"></span>fire<span class="signature">(event)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -432,7 +432,7 @@ bubbled, starting with the first registered listener, and ending with the last.
 
         
 <div class="param-desc">
-    Promise Once the event has been bubbled to all registered listeners,
+    Once the event has been bubbled to all registered listeners,
 the result will be returned by resolving or rejecting this returned Promise, depending on the outcome.
 If the event is cancelled by a listener, this Promise will be rejected with any data provided
 by the cancelling listener. If this event is not cancelled, any data provided by all listeners
@@ -440,6 +440,18 @@ will be included when resolving the returned Promise.
 </div>
 
 
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
 
     
 
@@ -713,7 +725,7 @@ load(api) {
 
     
 
-    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(typeOrListenersObject, listener)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(typeOrListenersObject, Listener)</span><span class="type-signature"></span></h4>
 
     
 
@@ -761,6 +773,14 @@ load(api) {
 
             <td class="type">
             
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Object</span>
+
+
+            
             </td>
 
             
@@ -776,10 +796,15 @@ with event type properties and listener function values to conveniently register
 
         <tr>
             
-                <td class="name"><code>listener</code></td>
+                <td class="name"><code>Listener</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#eventCallback">eventCallback</a></span>
+
+
             
             </td>
 
@@ -787,8 +812,9 @@ with event type properties and listener function values to conveniently register
 
             
 
-            <td class="description last">Listener function to be called when the passed event type is fired.
-This parameter is ignored if the first parameter is a listener object.</td>
+            <td class="description last">Function to be called when the passed event type is fired.
+This parameter is ignored if the first parameter is a listener object. In that case, it must be
+supplied as the value for each event type property in the passed object.</td>
         </tr>
 
     
@@ -832,7 +858,7 @@ This parameter is ignored if the first parameter is a listener object.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core.js.html">core.js</a>, <a href="core.js.html#line102">line 102</a>
+        <a href="core.js.html">core.js</a>, <a href="core.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -860,17 +886,17 @@ This parameter is ignored if the first parameter is a listener object.</td>
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// register a single listener for an "add" event
-core.on('add', function(event) {
+core.on('add', event => {
    // handle "add" event
 })
 
 // register a listener for the "add" event,
 // and another for the "remove" event
 core.on({
-   add: function(event) {
+   add: event => {
       // handle "add" event
    },
-   remove: function(event) {
+   remove: event => {
       // handle "remove" event
    }
 })</code></pre>
@@ -932,13 +958,18 @@ activity.
 
             <td class="type">
             
+                
+<span class="param-type"><a href="global.html#eventCallback">eventCallback</a></span>
+
+
+            
             </td>
 
             
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Listener function</td>
         </tr>
 
     
@@ -954,6 +985,9 @@ activity.
 
     
 
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.0.0</li></ul></dd>
     
 
     
@@ -979,7 +1013,7 @@ activity.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core.js.html">core.js</a>, <a href="core.js.html#line126">line 126</a>
+        <a href="core.js.html">core.js</a>, <a href="core.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -1004,6 +1038,18 @@ activity.
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// register for all system events
+core.onAll(event => {
+   console.log(`I just received an event of type ${event.type}.`)
+   // do something else with this event:
+   //   - return a new value for the originator
+   //   - cancel the event
+   //   - passively listen or react in some other way
+})</code></pre>
+
+
 
         
     
@@ -1021,13 +1067,13 @@ activity.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Core.html">Core</a></li><li><a href="Event.html">Event</a></li><li><a href="Plugin.html">Plugin</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Core.html">Core</a></li><li><a href="Event.html">Event</a></li><li><a href="Plugin.html">Plugin</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Mar 29 2016 06:01:47 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Mar 29 2016 15:02:59 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

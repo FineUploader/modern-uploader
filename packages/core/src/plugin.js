@@ -7,7 +7,7 @@ const privates = new WeakMap()
  */
 class Plugin {
     /**
-     * @param name {string} A name for this plug-in (optional)
+     * @param {string} name A name for this plug-in (optional)
      * @since 0.0.0
      */
     constructor(name = this.constructor.name) {
@@ -20,7 +20,7 @@ class Plugin {
      * event handlers here.
      *
      * @param {Core} api API for core module.
-     * @returns {null|undefined|Promise} If a Promise is returned, resolve or reject once the outcome is known.
+     * @returns {(null|undefined|Promise)} If a Promise is returned, resolve or reject once the outcome is known.
      * Otherwise, return nothing for success or throw for failure. To override existing
      * API methods, or provide new API methods, simply return an object (or pass one
      * through your call to resolve the returned Promise). Any new or overridden methods

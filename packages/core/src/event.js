@@ -21,7 +21,7 @@ class Event {
      *
      * @param {Object} eventData
      * @param {boolean} [eventData.informational=false]
-     * @param {*} [eventData.payload] Data associated with this event
+     * @param {Object} [eventData.payload] Data associated with this event
      * from the entity that triggered the event.
      * @param {string} eventData.type Type of event to fire.
      * @since 0.0.0
@@ -67,8 +67,10 @@ class Event {
 
     /**
      * Data associated with this event from the entity that triggered the event.
+     * Do NOT mutate the value of this property. Instead, create a deep copy
+     * and mutate the copy.
      *
-     * @type {*}
+     * @type {(Object|undefined)}
      * @since 0.0.0
      * @readonly
      */
@@ -82,9 +84,11 @@ class Event {
 
     /**
      * Data provided by the previous event handler.
+     * Do NOT mutate the value of this property. Instead, create a deep
+     * copy and mutate the copy.
      *
      * @since 0.0.0
-     * @type {*|undefined}
+     * @type {(Object|undefined)}
      * @readonly
      */
     get result() {

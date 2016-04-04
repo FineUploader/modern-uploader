@@ -59,6 +59,7 @@ module.exports = function (config) {
         },
         customLaunchers: customLaunchers,
         browsers: Object.keys(customLaunchers),
+        browserNoActivityTimeout: 30000,
         captureTimeout: 120000,
         concurrency: 5,
         reporters: ['spec', 'saucelabs'],

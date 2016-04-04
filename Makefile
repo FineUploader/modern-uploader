@@ -38,6 +38,7 @@ publishDocs: travisDocsSetup docs cleanMergeDocs commitDocsOnly
 else
 publicDocs:
 	@echo Not a master build, won't publish docs update.
+endif
 
 test: lint
 ifeq ($(CI), true)

@@ -1,13 +1,43 @@
 import deliverEvent from './event-handler'
 import loadPlugins from './plugin-loader'
+import observeEvents from './event-observer'
 import Plugin from './plugin'
+import Store from './store'
 
 const listeners = new WeakMap()
+const store = new WeakMap()
+
+/**
+ * Invoked when notifying a handler about an event it has registered for.
+ *
+ * @callback eventCallback
+ * @param {Event} Event object assocaited with the registered event.
+ */
+
+/**
+ * Add an item to the system. This event is triggered before the item
+ * is actually persisted. If the event is cancelled, the item will not
+ * be persisted. Furthermore, the item and its associated data can be
+ * influenced by various event handlers.
+ *
+ * @event add
+ * @type {Event}
+ * @property {Event#payload} payload - Any data to store with the item.
+ * In addition to the standardized properties described below, you may
+ * include other custom properties that are useful to your specific use case
+ * or plug-in as well.
+ * @property {*} payload.item - The item to be added. May be anything,
+ * such as a File, Blob, &lt;canvas&gt;, etc.
+ * @property {string} [payload.id] - A unique ID for this item. Will be
+ * calculated by Core if not provided.
+ * @property {string} [payload.name] - A name for the item.
+ */
 
 /**
  * Main class for core plug-in.
  *
  * @extends Plugin
+ * @listens add
  * @since 0.0.0
  * @example
  * import Core from 'core'
@@ -27,7 +57,12 @@ class Core extends Plugin {
      */
     constructor(plugins = []) {
         super('core')
+        
         listeners.set(this, {})
+        store.set(this, new Store())
+        
+        observeEvents(this, store)
+        
         loadPlugins(plugins, this)
     }
 
@@ -138,13 +173,6 @@ class Core extends Plugin {
         const myListeners = listeners.get(this)
         Object.keys(myListeners).concat('*').forEach(type => this.on(type, listener))
     }
-
-    /**
-     * Invoked when notifying a handler about an event it has registered for.
-     *
-     * @callback eventCallback
-     * @param {Event} Event object assocaited with the registered event.
-     */
 }
 
 export default Core

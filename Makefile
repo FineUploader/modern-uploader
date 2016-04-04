@@ -32,8 +32,12 @@ docs:
 lint:
 	$(NPM_BIN)/eslint packages/. --ext .js --cache
 
+ifeq ($(TRAVIS_BRANCH)$(TRAVIS_PULL_REQUEST), masterfalse)
 publishDocs: travisDocsSetup docs cleanMergeDocs commitDocsOnly
 	git push origin gh-pages
+else
+publicDocs:
+	@echo Not a master build, won't publish docs update.
 
 test: lint
 ifeq ($(CI), true)

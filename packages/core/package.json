@@ -21,6 +21,6 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "object-assign": "4.0.1"
+    "object-assign": "latest"
   }
 }

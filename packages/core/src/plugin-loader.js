@@ -1,4 +1,5 @@
 import Event from './event'
+import objectAssign from 'object-assign'
 import Plugin from './plugin'
 
 function checkPluginTypes(plugins) {
@@ -43,7 +44,7 @@ function loadPlugins(plugins, {api, index = 0}) {
     loadPlugin(plugin, api).then(
         function(returnValue) {
             if (typeof returnValue === 'object') {
-                Object.assign(api, returnValue)
+                objectAssign(api, returnValue)
             }
 
             let nextIndex = index + 1

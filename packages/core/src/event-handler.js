@@ -1,7 +1,9 @@
+import objectAssign from 'object-assign'
+
 function deliverEvent(event, listeners) {
     const listenersForEventType = listeners[event.type] || listeners['*']
     if (listenersForEventType) {
-        return deliverEventToListener(event, Object.assign([], listenersForEventType))
+        return deliverEventToListener(event, objectAssign([], listenersForEventType))
     }
 
     return new Promise(resolve => resolve(event))

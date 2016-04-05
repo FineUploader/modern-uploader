@@ -57,7 +57,11 @@ class Core extends Plugin {
      */
     constructor(plugins = []) {
         super('core')
-        
+
+        if (!window.Promise) {
+            throw new Error('Promises are required by this library, but are supported in this browser. Please use a Promise polyfill.')
+        }
+
         listeners.set(this, {})
         store.set(this, new Store())
         

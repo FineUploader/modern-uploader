@@ -5,13 +5,13 @@ import Plugin from './plugin'
 import Store from './store'
 
 const listeners = new WeakMap()
-const store = new WeakMap()
+const stores = new WeakMap()
 
 /**
  * Invoked when notifying a handler about an event it has registered for.
  *
  * @callback eventCallback
- * @param {Event} Event object assocaited with the registered event.
+ * @param {Event} Event object associated with the registered event.
  */
 
 /**
@@ -34,10 +34,37 @@ const store = new WeakMap()
  */
 
 /**
+ * Indicates that a specific item has been added to the system.
+ * This is an informational event.
+ *
+ * @event added
+ * @type {Event}
+ * @property {Event#payload} payload - Information about the added item.
+ * @property {*} payload.id - The unique ID of the added item.
+ */
+
+/**
+ * Indicates that all plugins/modules have been successfully loaded by the library.
+ * This is an informational event.
+ *
+ * @event allModulesLoaded
+ * @type {Event}
+ */
+
+/**
+ * Requests that an existing item record be updated. Specifics TBD.
+ *
+ * @event updateData
+ * @type {Event}
+ */
+
+/**
  * Main class for core plug-in.
  *
  * @extends Plugin
  * @listens add
+ * @fires allModulesLoaded
+ * @fires added
  * @since 0.0.0
  * @example
  * import Core from 'core'
@@ -63,11 +90,38 @@ class Core extends Plugin {
         }
 
         listeners.set(this, {})
-        store.set(this, new Store())
+        stores.set(this, new Store())
         
-        observeEvents(this, store)
+        observeEvents(this, stores.get(this))
         
         loadPlugins(plugins, this)
+    }
+
+    /**
+     * This looks up items by ID. It also provides an opportunity to retrieve all items
+     * maintained by the system. The returned records will NOT be cloned (in an effort to
+     * ensure this operation is not time consuming). So, please do NOT modify these records
+     * directly. Any records that you would like to modify must be cloned and then sent back
+     * to the module in an [updateData event]{@link event:updateData}.
+     *
+     * @param {(string|Array|undefined)} idOrIds - Retrieve the associated records by ID.
+     * If this is undefined, all records will be returned.
+     * @returns {(Array|null)} One or more matching records, or null if no matches were found.
+     * @example
+     * // get one record
+     * const record = api.get('uuid-000')
+     * expect(record).toEqual([uuid000Record])
+     *
+     * // get multiple records
+     * const record = api.get(['uuid-000', 'uuid-001'])
+     * expect(record).toEqual([uuid000Record, uuid001Record])
+     *
+     * // get all records
+     * const record = api.get()
+     * expect(record).toEqual([uuid000Record, uuid001Record, uuid002Record, ...])
+     */
+    get(idOrIds) {
+        stores.get(this).get(idOrIds)
     }
 
     /**

@@ -1,19 +1,24 @@
+import mergeOptions from 'merge-options'
+
+import Event from './event'
 import Uuid from './uuid'
 
-function observeEvents(api, store) { // eslint-disable-line no-unused-vars
+function observeEvents(api, store) {
     api.on('add', event => {
         if (!event.cancelled) {
-            const data = event.result || event.payload
-            const newEntry = {
-                id: data.id
+            const entry = mergeOptions({}, event.result || event.payload)
+
+            if (entry.id == null) {
+                entry.id = new Uuid().toString()
             }
 
-            if (newEntry.id != null) {
-                newEntry.id = new Uuid().toString()
-            }
+            store.add(entry)
 
-            // TODO add to store if event not cancelled
-            // TODO fire "added" event
+            api.fire(new Event({
+                informational: true,
+                payload: {id: entry.id},
+                type: 'added'
+            }))
         }
     })
 }

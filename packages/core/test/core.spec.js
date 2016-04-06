@@ -1,4 +1,5 @@
 import Core, {Event, Plugin} from 'core'
+import Uuid from 'core/uuid'
 
 class DummyPlugin extends Plugin {
     constructor(name, loadFunction) {
@@ -350,13 +351,13 @@ describe('Core', () => {
             it('passes data returned from one handler to subsequent handlers & event creator', (done) => {
                 new Core([
                     new DummyPlugin('one', api => {
-                        api.on('add', event => {
+                        api.on('test', event => {
                             expect(event.result.item).toBe('canned file')
                         })
                     }),
 
                     new DummyPlugin('two', api => {
-                        api.on('add', event => {
+                        api.on('test', event => {
                             expect(event.payload.item instanceof Blob).toBeTruthy()
                             return {
                                 item: 'canned file'
@@ -368,7 +369,7 @@ describe('Core', () => {
                         api.on('allModulesLoaded', () => {
                             api.fire(
                                 new Event({
-                                    type: 'add',
+                                    type: 'test',
                                     payload: {
                                         item: new Blob(['hello!'], {type: 'text/plain'})
                                     }
@@ -386,7 +387,7 @@ describe('Core', () => {
             it('passes data returned from one handler to subsequent handlers & event creator w/ async handlers', (done) => {
                 new Core([
                     new DummyPlugin('one', api => {
-                        api.on('add', event => {
+                        api.on('test', event => {
                             return new Promise(resolve => {
                                 expect(event.result.item).toBe('canned file')
                                 resolve({
@@ -398,7 +399,7 @@ describe('Core', () => {
                     }),
 
                     new DummyPlugin('two', api => {
-                        api.on('add', event => {
+                        api.on('test', event => {
                             expect(event.payload.item instanceof Blob).toBeTruthy()
                             return new Promise(resolve => {
                                 resolve({
@@ -412,7 +413,7 @@ describe('Core', () => {
                         api.on('allModulesLoaded', () => {
                             api.fire(
                                 new Event({
-                                    type: 'add',
+                                    type: 'test',
                                     payload: {
                                         item: new Blob(['hello!'], {type: 'text/plain'})
                                     }
@@ -431,7 +432,7 @@ describe('Core', () => {
             it('marks event as cancelled and ignores return value for subsequent handlers when a handler rejects returned promise', (done) => {
                 new Core([
                     new DummyPlugin('one', api => {
-                        api.on('add', event => {
+                        api.on('test', event => {
                             expect(event.cancelled).toBe(true)
                             expect(event.result).toEqual({error: 'expected error during unit test'})
                             return {
@@ -442,7 +443,7 @@ describe('Core', () => {
                     }),
 
                     new DummyPlugin('two', api => {
-                        api.on('add', event => {
+                        api.on('test', event => {
                             expect(event.payload.item instanceof Blob).toBeTruthy()
                             return new Promise((resolve, reject) => {
                                 reject({
@@ -456,7 +457,7 @@ describe('Core', () => {
                         api.on('allModulesLoaded', () => {
                             api.fire(
                                 new Event({
-                                    type: 'add',
+                                    type: 'test',
                                     payload: {
                                         item: new Blob(['hello!'], {type: 'text/plain'})
                                     }
@@ -470,6 +471,94 @@ describe('Core', () => {
                                     done()
                                 }
                             )
+                        })
+                    })
+                ])
+            })
+        })
+
+        describe('"add" event observer', () => {
+            it('does not add an item if the add event has been cancelled', (done) => {
+                let added = false
+
+                new Core([
+                    new DummyPlugin('one', api => {
+                        api.on('add', event => {
+                            event.cancel()
+                        })
+                    }),
+
+                    new DummyPlugin('two', api => {
+                        api.on('allModulesLoaded', () => {
+                            api.fire(new Event({
+                                type: 'add',
+                                payload: {
+                                    item: 'dummy file'
+                                }
+                            })).then(
+                                function onAdded() {},
+                                function notAdded() {
+                                    setTimeout(() => {
+                                        expect(added).toBe(false)
+                                        done()
+                                    })
+                                }
+                            )
+                        })
+
+                        api.on('added', () => {
+                            added = true
+                        })
+                    })
+                ])
+            })
+
+            it('triggers an "added" event if an "add" event succeeds', (done) => {
+                let added = false
+                const uuid = new Uuid()
+
+                new Core([
+                    new DummyPlugin('one', api => {
+                        api.on('allModulesLoaded', () => {
+                            api.fire(new Event({
+                                type: 'add',
+                                payload: {
+                                    id: uuid.toString(),
+                                    item: 'dummy file'
+                                }
+                            })).then(
+                                function onAdded() {
+                                    setTimeout(() => {
+                                        expect(added).toBe(true)
+                                        done()
+                                    })
+                                }
+                            )
+                        })
+
+                        api.on('added', event => {
+                            added = true
+                            expect(event.payload.id).toBe(uuid.toString())
+                        })
+                    })
+                ])
+            })
+
+            it('generates an ID if one is not passed', (done) => {
+                new Core([
+                    new DummyPlugin('one', api => {
+                        api.on('allModulesLoaded', () => {
+                            api.fire(new Event({
+                                type: 'add',
+                                payload: {
+                                    item: 'dummy file'
+                                }
+                            }))
+                        })
+
+                        api.on('added', event => {
+                            expect(event.payload.id).toBeTruthy()
+                            done()
                         })
                     })
                 ])

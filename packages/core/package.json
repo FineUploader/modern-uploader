@@ -21,6 +21,7 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
+    "merge-options": "latest",
     "object-assign": "latest"
   }
 }

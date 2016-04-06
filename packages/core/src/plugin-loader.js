@@ -1,5 +1,6 @@
-import Event from './event'
 import objectAssign from 'object-assign'
+
+import Event from './event'
 import Plugin from './plugin'
 
 function checkPluginTypes(plugins) {
@@ -52,7 +53,10 @@ function loadPlugins(plugins, {api, index = 0}) {
                 loadPlugins(plugins, {api, index: nextIndex})
             }
             else {
-                api.fire(new Event({type: 'allModulesLoaded'}))
+                api.fire(new Event({
+                    informational: true,
+                    type: 'allModulesLoaded'
+                }))
             }
         },
 

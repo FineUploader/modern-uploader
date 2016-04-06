@@ -111,8 +111,8 @@ class Event {
      * Do NOT mutate the value of this property. Instead, create a deep
      * copy and mutate the copy.
      *
-     * @since 0.0.0
      * @type {(Object|undefined)}
+     * @since 0.0.0
      * @readonly
      */
     get result() {

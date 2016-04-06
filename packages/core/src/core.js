@@ -12,6 +12,7 @@ const stores = new WeakMap()
  *
  * @callback eventCallback
  * @param {Event} Event object associated with the registered event.
+ * @since 0.0.0
  */
 
 /**
@@ -31,6 +32,7 @@ const stores = new WeakMap()
  * @property {string} [payload.id] - A unique ID for this item. Will be
  * calculated by Core if not provided.
  * @property {string} [payload.name] - A name for the item.
+ * @since 0.0.0
  */
 
 /**
@@ -41,6 +43,7 @@ const stores = new WeakMap()
  * @type {Event}
  * @property {Event#payload} payload - Information about the added item.
  * @property {*} payload.id - The unique ID of the added item.
+ * @since 0.0.0
  */
 
 /**
@@ -49,6 +52,7 @@ const stores = new WeakMap()
  *
  * @event allModulesLoaded
  * @type {Event}
+ * @since 0.0.0
  */
 
 /**
@@ -56,6 +60,7 @@ const stores = new WeakMap()
  *
  * @event updateData
  * @type {Event}
+ * @since 0.0.0
  */
 
 /**
@@ -107,6 +112,7 @@ class Core extends Plugin {
      * @param {(string|Array|undefined)} idOrIds - Retrieve the associated records by ID.
      * If this is undefined, all records will be returned.
      * @returns {(Array|null)} One or more matching records, or null if no matches were found.
+     * @since 0.0.0
      * @example
      * // get one record
      * const record = api.get('uuid-000')

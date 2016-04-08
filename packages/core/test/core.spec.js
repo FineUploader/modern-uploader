@@ -544,6 +544,46 @@ describe('Core', () => {
                 ])
             })
 
+            it('triggers an "added" event for all added items if an "add" event succeeds w/ multiple items specified', (done) => {
+                let added = false
+                const uuid0 = new Uuid()
+                const uuid1 = new Uuid()
+
+                new Core([
+                    new DummyPlugin('one', api => {
+                        api.on('allModulesLoaded', () => {
+                            api.fire(new Event({
+                                type: 'add',
+                                payload: [
+                                    {
+                                        id: uuid0.toString(),
+                                        item: 'dummy file 0'
+                                    },
+                                    {
+                                        id: uuid1.toString(),
+                                        item: 'dummy file 1'
+                                    }
+                                ]
+                            })).then(
+                                function onAdded() {
+                                    setTimeout(() => {
+                                        expect(added).toBe(true)
+                                        done()
+                                    })
+                                }
+                            )
+                        })
+
+                        api.on('added', event => {
+                            added = true
+                            expect(Array.isArray(event.payload)).toBeTruthy()
+                            expect(event.payload[0].id).toBe(uuid0.toString())
+                            expect(event.payload[1].id).toBe(uuid1.toString())
+                        })
+                    })
+                ])
+            })
+
             it('generates an ID if one is not passed', (done) => {
                 new Core([
                     new DummyPlugin('one', api => {

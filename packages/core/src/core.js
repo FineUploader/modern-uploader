@@ -26,13 +26,41 @@ const stores = new WeakMap()
  * @property {Event#payload} payload - Any data to store with the item.
  * In addition to the standardized properties described below, you may
  * include other custom properties that are useful to your specific use case
- * or plug-in as well.
+ * or plug-in as well. Note that the payload may be an Object or an Array.
+ * In order to group multiple entries to be added, include an Array as the payload.
+ * In that case, each array element will represent a single item and its associated
+ * data. If you would like to group multiple items this way, the payload properties
+ * documented here apply to each object in the array.
  * @property {*} payload.item - The item to be added. May be anything,
  * such as a File, Blob, &lt;canvas&gt;, etc.
  * @property {string} [payload.id] - A unique ID for this item. Will be
  * calculated by Core if not provided.
  * @property {string} [payload.name] - A name for the item.
  * @since 0.0.0
+ * @example
+ * // requests to add a single item, ID will be generated
+ * new Event({
+ *    type: 'add',
+ *    payload: {
+ *       item: blob1,
+ *       name: 'cat photos'
+ *    }
+ * })
+ *
+ * // requests to add multiple items, IDs will be generated
+ * new Event({
+ *    type: 'add',
+ *    payload: [
+ *       {
+ *          item: blob1,
+ *          name: 'cat photos'
+ *       },
+ *       {
+ *          item: blob2,
+ *          name: 'dog photos'
+ *       }
+ *    ]
+ * })
  */
 
 /**
@@ -41,8 +69,10 @@ const stores = new WeakMap()
  *
  * @event added
  * @type {Event}
- * @property {Event#payload} payload - Information about the added item.
- * @property {*} payload.id - The unique ID of the added item.
+ * @property {Event#payload} payload - Information about the added item or items. This
+ * can be a object for a single item, or an array of objects for multiple items.
+ * @property {*} payload.id - The unique ID (or supplied ID) of the added item. If the
+ * payload is an array of objects, each object will contain the ID of the associated item.
  * @since 0.0.0
  */
 

@@ -6,7 +6,7 @@ import Plugin from './plugin'
 function checkPluginTypes(plugins) {
     plugins.forEach(plugin => {
         if (!(plugin instanceof Plugin)) {
-            throw new Error('Provided module does not extend Plugin. ' + plugin)
+            throw new Error('Provided plug-in does not extend the Plugin class. ' + plugin)
         }
     })
 }
@@ -55,7 +55,7 @@ function loadPlugins(plugins, {api, index = 0}) {
             else {
                 api.fire(new Event({
                     informational: true,
-                    type: 'allModulesLoaded'
+                    type: 'allPluginsLoaded'
                 }))
             }
         },

@@ -77,10 +77,10 @@ const stores = new WeakMap()
  */
 
 /**
- * Indicates that all plugins/modules have been successfully loaded by the library.
+ * Indicates that all plugins have been successfully loaded by the library.
  * This is an informational event.
  *
- * @event allModulesLoaded
+ * @event allPluginsLoaded
  * @type {Event}
  * @since 0.0.0
  */
@@ -98,7 +98,7 @@ const stores = new WeakMap()
  *
  * @extends Plugin
  * @listens add
- * @fires allModulesLoaded
+ * @fires allPluginsLoaded
  * @fires added
  * @since 0.0.0
  * @example
@@ -137,7 +137,7 @@ class Core extends Plugin {
      * maintained by the system. The returned records will NOT be cloned (in an effort to
      * ensure this operation is not time consuming). So, please do NOT modify these records
      * directly. Any records that you would like to modify must be cloned and then sent back
-     * to the module in an [updateData event]{@link event:updateData}.
+     * to the system in an [updateData event]{@link event:updateData}.
      *
      * @param {(string|Array|undefined)} idOrIds - Retrieve the associated records by ID.
      * If this is undefined, all records will be returned.

@@ -21,7 +21,7 @@ class Plugin {
      * Do NOT mutate the passed API object directly. Only return a new object
      * that adds new methods or augments existing ones.
      *
-     * @param {Core} api API for core module.
+     * @param {Core} api API for core plug-in.
      * @returns {(Promise|undefined)} If a Promise is returned, resolve or reject once the outcome is known.
      * Otherwise, return nothing for success or throw for failure. To override existing
      * API methods, or provide new API methods, simply return an object (or pass one

@@ -147,7 +147,7 @@ describe('Core', () => {
                 }),
 
                 new DummyPlugin('three', (api) => {
-                    api.on('allModulesLoaded', () => {
+                    api.on('allPluginsLoaded', () => {
                         expect(api.returnOne()).toBe('one1')
 
                         api.fire(
@@ -164,27 +164,27 @@ describe('Core', () => {
     })
     
     describe('event handling', () => {
-        describe('allModulesLoaded behavior', () => {
-            it('fires allModulesLoaded once all modules are loaded - sync loading', (done) => {
+        describe('allPluginsLoaded behavior', () => {
+            it('fires allPluginsLoaded once all modules are loaded - sync loading', (done) => {
                 const core = new Core([
                     new DummyPlugin('one', () => {}),
                     new DummyPlugin('two', () => {})
                 ])
 
-                core.on('allModulesLoaded', (event) => {
-                    expect(event.type).toBe('allModulesLoaded')
+                core.on('allPluginsLoaded', (event) => {
+                    expect(event.type).toBe('allPluginsLoaded')
                     done()
                 })
             })
 
-            it('fires allModulesLoaded once all modules are loaded - async loading', (done) => {
+            it('fires allPluginsLoaded once all modules are loaded - async loading', (done) => {
                 const core = new Core([
                     new DummyPlugin('one', () => new Promise(resolve => setTimeout(resolve, 20))),
                     new DummyPlugin('two', () => new Promise(resolve => setTimeout(resolve, 10)))
                 ])
 
                 setTimeout(() => {
-                    core.on('allModulesLoaded', () => done())
+                    core.on('allPluginsLoaded', () => done())
                 }, 29)
             })
 
@@ -193,17 +193,17 @@ describe('Core', () => {
 
                 new Core([
                     new DummyPlugin('one', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             callbacks.push('one')
                             expect(callbacks).toEqual(['three', 'two', 'one'])
                             done()
                         })
                     }),
                     new DummyPlugin('two', api => {
-                        api.on('allModulesLoaded', () => callbacks.push('two'))
+                        api.on('allPluginsLoaded', () => callbacks.push('two'))
                     }),
                     new DummyPlugin('three', api => {
-                        api.on('allModulesLoaded', () => callbacks.push('three'))
+                        api.on('allPluginsLoaded', () => callbacks.push('three'))
                     })
                 ])
             })
@@ -232,7 +232,7 @@ describe('Core', () => {
                         })
                     }),
                     new DummyPlugin('four', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(new Event({type: 'test-event'}))
                         })
                     })
@@ -253,7 +253,7 @@ describe('Core', () => {
                         })
                     }),
                     new DummyPlugin('two', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(new Event({type: 'test-event'}))
                             api.fire(new Event({type: 'test-event2'}))
                         })
@@ -267,7 +267,7 @@ describe('Core', () => {
                 new Core([
                     new DummyPlugin('one', api => {
                         return new Promise(resolve => {
-                            api.on('allModulesLoaded', () => {
+                            api.on('allPluginsLoaded', () => {
                                 callbacks.push('one')
                                 expect(callbacks).toEqual(['two', 'one'])
                                 done()
@@ -277,7 +277,7 @@ describe('Core', () => {
                     }),
                     new DummyPlugin('two', api => {
                         return new Promise(resolve => {
-                            api.on('allModulesLoaded', () => callbacks.push('two'))
+                            api.on('allPluginsLoaded', () => callbacks.push('two'))
                             resolve()
                         })
                     })
@@ -290,7 +290,7 @@ describe('Core', () => {
                 new Core([
                     new DummyPlugin('one', api => {
                         return new Promise(resolve => {
-                            api.on('allModulesLoaded', () => {
+                            api.on('allPluginsLoaded', () => {
                                 callbacks.push('one')
                                 expect(callbacks).toEqual(['two', 'one'])
                                 done()
@@ -300,7 +300,7 @@ describe('Core', () => {
                     }),
                     new DummyPlugin('two', api => {
                         return new Promise(resolve => {
-                            api.on('allModulesLoaded', () => {
+                            api.on('allPluginsLoaded', () => {
                                 return new Promise(resolve => {
                                     callbacks.push('two')
                                     resolve()
@@ -327,7 +327,7 @@ describe('Core', () => {
                     }),
 
                     new DummyPlugin('two', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(new Event({type: 'test'})).then(
                                 () => {},
                                 event => {
@@ -366,7 +366,7 @@ describe('Core', () => {
                     }),
 
                     new DummyPlugin('three', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(
                                 new Event({
                                     type: 'test',
@@ -410,7 +410,7 @@ describe('Core', () => {
                     }),
 
                     new DummyPlugin('three', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(
                                 new Event({
                                     type: 'test',
@@ -454,7 +454,7 @@ describe('Core', () => {
                     }),
 
                     new DummyPlugin('three', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(
                                 new Event({
                                     type: 'test',
@@ -489,7 +489,7 @@ describe('Core', () => {
                     }),
 
                     new DummyPlugin('two', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(new Event({
                                 type: 'add',
                                 payload: {
@@ -519,7 +519,7 @@ describe('Core', () => {
 
                 new Core([
                     new DummyPlugin('one', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(new Event({
                                 type: 'add',
                                 payload: {
@@ -551,7 +551,7 @@ describe('Core', () => {
 
                 new Core([
                     new DummyPlugin('one', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(new Event({
                                 type: 'add',
                                 payload: [
@@ -587,7 +587,7 @@ describe('Core', () => {
             it('generates an ID if one is not passed', (done) => {
                 new Core([
                     new DummyPlugin('one', api => {
-                        api.on('allModulesLoaded', () => {
+                        api.on('allPluginsLoaded', () => {
                             api.fire(new Event({
                                 type: 'add',
                                 payload: {

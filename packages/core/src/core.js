@@ -1,6 +1,6 @@
 import deliverEvent from './event-handler'
 import loadPlugins from './plugin-loader'
-import observeEvents from './event-observer'
+import observeEvents from './event-observers'
 import Plugin from './plugin'
 import Store from './store'
 

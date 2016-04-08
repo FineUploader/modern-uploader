@@ -13,7 +13,7 @@ function deliverEventToListener(event, listeners) {
     return new Promise((resolve, reject) => {
         const listener = listeners.pop()
 
-        if (event.cancelled) {
+        if (event.cancelled || event.informational) {
             listener(event)
             listeners.length ? deliverEventToListener(event, listeners).then(resolve, reject) : reject(event)
         }

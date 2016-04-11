@@ -41,7 +41,7 @@ function addItem({item, store, groupId}) {
         entry.groupId = groupId
     }
 
-    store.add(entry)
+    store.addEntry(entry)
 
     return {id: entry.id}
 }

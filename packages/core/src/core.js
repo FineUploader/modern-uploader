@@ -1,4 +1,5 @@
 import deliverEvent from './event-handler'
+import Event from './event'
 import loadPlugins from './plugin-loader'
 import observeEvents from './event-observers'
 import Plugin from './plugin'
@@ -126,45 +127,78 @@ class Core extends Plugin {
 
         listeners.set(this, {})
         stores.set(this, new Store())
-        
+
         observeEvents(this, stores.get(this))
-        
+
         loadPlugins(plugins, this)
     }
 
     /**
-     * This looks up items by ID. It also provides an opportunity to retrieve all items
-     * maintained by the system. The returned records will NOT be cloned (in an effort to
-     * ensure this operation is not time consuming). So, please do NOT modify these records
-     * directly. Any records that you would like to modify must be cloned and then sent back
+     * This looks up items in the store. It also provides an opportunity to
+     * retrieve all items maintained by the system. Currently, items may be
+     * looked up by ID, or you may retrieve all items from the store. By
+     * default, the returned items will be deeply cloned, but this can be
+     * switched off to save processor cycles for large data sets.
+     * Any records that you would like to modify must be sent back
      * to the system in an [updateData event]{@link event:updateData}.
      *
-     * @param {(string|Array|undefined)} idOrIds - Retrieve the associated records by ID.
+     * @param {(Object|undefined)} entryQuery - Retrieve the associated
+     * records from the store. An object describes the specific entries to return.
      * If this is undefined, all records will be returned.
-     * @returns {(Array|null)} One or more matching records, or null if no matches were found.
+     * @param {(string|number|Array)} entryQuery.id - The ID or IDs of the entries
+     * to retrieve.
+     * @param {boolean} [clone=true]
+     * @returns {(Object|Array|null)} One or more matching records, or null if no matches were found.
+     * If only one record was requested, the an Array will not be returned - only the
+     * entry object or null if the entry cannot be located. If multiple records are
+     * requested, an array will always be returned with any matching entries.
+     * If no entries match, the array will be empty.
      * @since 0.0.0
      * @example
      * // get one record
-     * const record = api.get('uuid-000')
-     * expect(record).toEqual([uuid000Record])
+     * const record = api.get({id: 'uuid-000'})
+     * expect(record).toEqual(uuid000Record)
      *
      * // get multiple records
-     * const record = api.get(['uuid-000', 'uuid-001'])
+     * const record = api.get({id: ['uuid-000', 'uuid-001']})
      * expect(record).toEqual([uuid000Record, uuid001Record])
      *
      * // get all records
      * const record = api.get()
      * expect(record).toEqual([uuid000Record, uuid001Record, uuid002Record, ...])
      */
-    get(idOrIds) {
-        stores.get(this).get(idOrIds)
+    get(entryQuery, clone = true) {
+        const myStore = stores.get(this)
+
+        if (!entryQuery) {
+            return myStore.getAll(clone)
+        }
+
+        if (typeof entryQuery !== 'object') {
+            throw new Error('entryQuery parameter must be an object!')
+        }
+        if (!entryQuery.id) {
+            throw new Error('You may only query for IDs at the moment - so your entryQuery object must include an "id" property.')
+        }
+
+        if (!Array.isArray(entryQuery.id)) {
+            return myStore.getById(entryQuery.id, clone)
+        }
+
+        const matchingRecords = []
+        const ids = [].concat(entryQuery.id)
+        ids.forEach(id => {
+            const matchingRecord = myStore.getById(id, clone)
+            matchingRecord && matchingRecords.push(matchingRecord)
+        })
+        return matchingRecords
     }
 
     /**
      * Trigger an event to be passed to all other registered event listeners. This event will be
      * bubbled, starting with the first registered listener, and ending with the last.
      *
-     * @param {Event} event event to pass to all registered listeners for this event type.
+     * @param {Event} event - event to pass to all registered listeners for this event type.
      * @returns {Promise} Once the event has been bubbled to all registered listeners,
      * the result will be returned by resolving or rejecting this returned Promise, depending on the outcome.
      * If the event is cancelled by a listener, this Promise will be rejected with any data provided
@@ -198,6 +232,10 @@ class Core extends Plugin {
      * )
      */
     fire(event) {
+        if ( !(event instanceof Event) ) {
+            throw new Error('You must pass an Event object to the fire method!')
+        }
+
         const myListeners = listeners.get(this)
         return deliverEvent(event, myListeners)
     }
@@ -205,10 +243,10 @@ class Core extends Plugin {
     /**
      * Register one or more handlers for one or more specific events.
      *
-     * @param {(string|Object)} typeOrListenersObject Register one listener by specifying the event type as a string here,
+     * @param {(string|Object)} typeOrListenersObject - Register one listener by specifying the event type as a string here,
      * followed by the listener function as the next parameter, or pass a single object parameter
      * with event type properties and listener function values to conveniently register for multiple events.
-     * @param {eventCallback} Listener Function to be called when the passed event type is fired.
+     * @param {eventCallback} listener - Listener Function to be called when the passed event type is fired.
      * This parameter is ignored if the first parameter is a listener object. In that case, it must be
      * supplied as the value for each event type property in the passed object.
      * @since 0.0.0
@@ -230,6 +268,13 @@ class Core extends Plugin {
      * })
      */
     on(typeOrListenersObject, listener) {
+        if (typeof typeOrListenersObject !== 'object' && typeof typeOrListenersObject !== 'string') {
+            throw new Error('The first argument to the on method must be a string or object!')
+        }
+        if (typeof listener !== 'function') {
+            throw new Error('You must pass a callback function as the second argument to the on method!')
+        }
+
         if (typeof typeOrListenersObject === 'string') {
             const type = typeOrListenersObject
             const myListeners = listeners.get(this)
@@ -251,7 +296,7 @@ class Core extends Plugin {
      * whenever any event is triggered in the system. A good example would be a plug-in that logs all
      * activity.
      *
-     * @param {eventCallback} listener Listener function
+     * @param {eventCallback} listener - Listener function
      * @since 0.0.0
      * @example
      * // register for all system events
@@ -264,6 +309,10 @@ class Core extends Plugin {
      * })
      */
     onAll(listener) {
+        if (typeof listener !== 'function') {
+            throw new Error('You must pass a callback function to the onAll method!')
+        }
+
         const myListeners = listeners.get(this)
         Object.keys(myListeners).concat('*').forEach(type => this.on(type, listener))
     }

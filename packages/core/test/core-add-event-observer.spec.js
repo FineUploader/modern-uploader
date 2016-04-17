@@ -63,7 +63,8 @@ describe('Core "add" event observer', () => {
 
                 api.on('added', event => {
                     added = true
-                    expect(event.payload.id).toBe(uuid.toString())
+                    expect(event.payload.length).toBe(1)
+                    expect(event.payload[0]).toBe(uuid.toString())
                 })
             })
         ])
@@ -101,9 +102,9 @@ describe('Core "add" event observer', () => {
 
                 api.on('added', event => {
                     added = true
-                    expect(Array.isArray(event.payload)).toBeTruthy()
-                    expect(event.payload[0].id).toBe(uuid0.toString())
-                    expect(event.payload[1].id).toBe(uuid1.toString())
+                    expect(event.payload.length).toBe(2)
+                    expect(event.payload[0]).toBe(uuid0.toString())
+                    expect(event.payload[1]).toBe(uuid1.toString())
                 })
             })
         ])
@@ -122,7 +123,8 @@ describe('Core "add" event observer', () => {
                 })
 
                 api.on('added', event => {
-                    expect(event.payload.id).toBeTruthy()
+                    expect(event.payload.length).toBe(1)
+                    expect(event.payload[0]).toBeTruthy()
                     done()
                 })
             })

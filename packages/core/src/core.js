@@ -17,9 +17,9 @@ const stores = new WeakMap()
  */
 
 /**
- * Add an item to the system. This event is triggered before the item
- * is actually persisted. If the event is cancelled, the item will not
- * be persisted. Furthermore, the item and its associated data can be
+ * Add one or more items to the system. This event is triggered before the item(s)
+ * is/are actually persisted. If the event is cancelled, the item(s) will not
+ * be persisted. Furthermore, the item(s) and their associated data can be
  * influenced by various event handlers.
  *
  * @event add
@@ -39,7 +39,7 @@ const stores = new WeakMap()
  * @property {string} [payload.name] - A name for the item.
  * @since 0.0.0
  * @example
- * // requests to add a single item, ID will be generated
+ * // add a single item, ID will be generated
  * new Event({
  *    type: 'add',
  *    payload: {
@@ -48,7 +48,7 @@ const stores = new WeakMap()
  *    }
  * })
  *
- * // requests to add multiple items, IDs will be generated
+ * // add multiple items, IDs will be generated
  * new Event({
  *    type: 'add',
  *    payload: [
@@ -65,15 +65,13 @@ const stores = new WeakMap()
  */
 
 /**
- * Indicates that a specific item has been added to the system.
+ * Indicates that one or more items have been added to the system.
  * This is an informational event.
  *
  * @event added
  * @type {Event}
- * @property {Event#payload} payload - Information about the added item or items. This
- * can be a object for a single item, or an array of objects for multiple items.
- * @property {*} payload.id - The unique ID (or supplied ID) of the added item. If the
- * payload is an array of objects, each object will contain the ID of the associated item.
+ * @property {Event#payload} payload - This will always be an array of IDs
+ * representing the added items.
  * @since 0.0.0
  */
 
@@ -83,6 +81,49 @@ const stores = new WeakMap()
  *
  * @event allPluginsLoaded
  * @type {Event}
+ * @since 0.0.0
+ */
+
+/**
+ * Removes one or more items from the system. This event is triggered before the item(s)
+ * is/are actually persisted. If the event is cancelled, the item(s) will not
+ * be removed. To remove only a subset of the items originally bound for removal,
+ * event handlers can return the subset of item IDs to remove. This means that another way
+ * to prevent all items from being removed is to return an empty array.
+ *
+ * @event remove
+ * @type {Event}
+ * @property {Event#payload} payload - One or more items to remove from the system. To remove
+ * a single item, simply include that item's ID as the payload. To remove multiple items,
+ * pass an array of the item IDs as the payload.
+ * @since 0.0.0
+ * @example
+ * // remove a single item w/ an ID of 12345
+ * new Event({
+ *    type: 'remove',
+ *    payload: 12345
+ * })
+ *
+ * // another way to remove a single item w/ an ID of 12345
+ * new Event({
+ *    type: 'remove',
+ *    payload: [12345]
+ * })
+ *
+ * // remove two items w/ an IDs of 12345 and 67890 respectively
+ * new Event({
+ *    type: 'remove',
+ *    payload: [12345, 67890]
+ * })
+ */
+
+/**
+ * Indicates that one or more items have been removed from the system.
+ * This is an informational event.
+ *
+ * @event removed
+ * @type {Event}
+ * @property {Event#payload} payload - IDs of the removed items. This will always be an array.
  * @since 0.0.0
  */
 

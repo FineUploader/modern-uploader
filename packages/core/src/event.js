@@ -23,7 +23,7 @@ class Event {
      * @param {boolean} [eventData.informational=false] True to mark this event
      * as information. That is, no action can be taken by listeners to affect the
      * event.
-     * @param {(Object|Array)} [eventData.payload] - Data associated with this event
+     * @param {*} [eventData.payload] - Data associated with this event
      * from the entity that triggered the event.
      * @param {string} eventData.type - Type of event to fire.
      * @since 0.0.0
@@ -85,7 +85,7 @@ class Event {
      * Do NOT mutate the value of this property. Instead, create a deep copy
      * and mutate the copy.
      *
-     * @type {(Object|Array|undefined)}
+     * @type {*}
      * @since 0.0.0
      * @readonly
      */

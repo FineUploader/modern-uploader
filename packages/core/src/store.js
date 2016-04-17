@@ -31,6 +31,11 @@ class Store {
 
         return entry || null
     }
+
+    removeEntry(id) {
+        const entriesMap = entries.get(this)
+        delete entriesMap[id]
+    }
 }
 
 export default Store

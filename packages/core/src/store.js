@@ -4,11 +4,15 @@ const entries = new WeakMap()
 
 class Store {
     constructor() {
-        entries.set(this, {})
+        this.clear()
     }
 
     addEntry(entry) {
         entries.get(this)[entry.id] = entry
+    }
+
+    clear() {
+        entries.set(this, {})
     }
 
     getAll(clone = true) {

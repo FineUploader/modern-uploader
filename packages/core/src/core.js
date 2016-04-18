@@ -128,6 +128,23 @@ const stores = new WeakMap()
  */
 
 /**
+ * Request that the system be reset. Currently, this only involves deleting the store of items.
+ *
+ * @event reset
+ * @type {Event}
+ * @since 0.0.0
+ */
+
+/**
+ * Indicates that the system has been reset.
+ * This is an informational event.
+ *
+ * @event resetComplete
+ * @type {Event}
+ * @since 0.0.0
+ */
+
+/**
  * Requests that an existing item record be updated. Specifics TBD.
  *
  * @event updateData

@@ -147,7 +147,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core.js.html">core.js</a>, <a href="core.js.html#line20">line 20</a>
+        <a href="core.js.html">core.js</a>, <a href="core.js.html#line207">line 207</a>
     </li></ul></dd>
     
 
@@ -162,7 +162,31 @@
 
 
 
+<h5>Fires:</h5>
+<ul>
+    <li><a href="global.html#event:allPluginsLoaded">event:allPluginsLoaded</a></li>
 
+    <li><a href="global.html#event:added">event:added</a></li>
+
+    <li><a href="global.html#event:removed">event:removed</a></li>
+
+    <li><a href="global.html#event:resetComplete">event:resetComplete</a></li>
+
+    <li><a href="global.html#event:updated">event:updated</a></li>
+</ul>
+
+
+
+<h5>Listens to Events:</h5>
+<ul>
+    <li><a href="global.html#event:add">event:add</a></li>
+
+    <li><a href="global.html#event:remove">event:remove</a></li>
+
+    <li><a href="global.html#event:reset">event:reset</a></li>
+
+    <li><a href="global.html#event:update">event:update</a></li>
+</ul>
 
 
 
@@ -405,7 +429,7 @@ bubbled, starting with the first registered listener, and ending with the last.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core.js.html">core.js</a>, <a href="core.js.html#line71">line 71</a>
+        <a href="core.js.html">core.js</a>, <a href="core.js.html#line328">line 328</a>
     </li></ul></dd>
     
 
@@ -490,6 +514,309 @@ core.fire(
 
     
 
+    <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">(entryQuery, clone<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object|Array|null}</span></h4>
+
+    
+
+
+
+<div class="description">
+    This looks up items in the store. It also provides an opportunity to
+retrieve all items maintained by the system. Currently, items may be
+looked up by ID, or you may retrieve all items from the store. By
+default, the returned items will be deeply cloned, but this can be
+switched off to save processor cycles for large data sets.
+Any records that you would like to modify must be sent back
+to the system in an updateData event.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entryQuery</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Retrieve the associated
+records from the store. An object describes the specific entries to return.
+If this is undefined, all records will be returned.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The ID or IDs of the entries
+to retrieve.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>clone</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core.js.html">core.js</a>, <a href="core.js.html#line264">line 264</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    One or more matching records, or null if no matches were found.
+If only one record was requested, the an Array will not be returned - only the
+entry object or null if the entry cannot be located. If multiple records are
+requested, an array will always be returned with any matching entries.
+If no entries match, the array will be empty.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// get one record
+const record = api.get({id: 'uuid-000'})
+expect(record).toEqual(uuid000Record)
+
+// get multiple records
+const record = api.get({id: ['uuid-000', 'uuid-001']})
+expect(record).toEqual([uuid000Record, uuid001Record])
+
+// get all records
+const record = api.get()
+expect(record).toEqual([uuid000Record, uuid001Record, uuid002Record, ...])</code></pre>
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id="load"><span class="type-signature">(abstract) </span>load<span class="signature">(api)</span><span class="type-signature"> &rarr; {Promise|undefined}</span></h4>
 
     
@@ -553,7 +880,7 @@ that adds new methods or augments existing ones.
 
             
 
-            <td class="description last">API for core module.</td>
+            <td class="description last">API for core plug-in.</td>
         </tr>
 
     
@@ -724,7 +1051,7 @@ load(api) {
 
     
 
-    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(typeOrListenersObject, Listener)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(typeOrListenersObject, listener)</span><span class="type-signature"></span></h4>
 
     
 
@@ -795,7 +1122,7 @@ with event type properties and listener function values to conveniently register
 
         <tr>
             
-                <td class="name"><code>Listener</code></td>
+                <td class="name"><code>listener</code></td>
             
 
             <td class="type">
@@ -811,7 +1138,7 @@ with event type properties and listener function values to conveniently register
 
             
 
-            <td class="description last">Function to be called when the passed event type is fired.
+            <td class="description last">Listener Function to be called when the passed event type is fired.
 This parameter is ignored if the first parameter is a listener object. In that case, it must be
 supplied as the value for each event type property in the passed object.</td>
         </tr>
@@ -857,7 +1184,7 @@ supplied as the value for each event type property in the passed object.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core.js.html">core.js</a>, <a href="core.js.html#line103">line 103</a>
+        <a href="core.js.html">core.js</a>, <a href="core.js.html#line364">line 364</a>
     </li></ul></dd>
     
 
@@ -1012,7 +1339,7 @@ activity.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core.js.html">core.js</a>, <a href="core.js.html#line137">line 137</a>
+        <a href="core.js.html">core.js</a>, <a href="core.js.html#line405">line 405</a>
     </li></ul></dd>
     
 
@@ -1066,13 +1393,13 @@ core.onAll(event => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Core.html">Core</a></li><li><a href="Event.html">Event</a></li><li><a href="Plugin.html">Plugin</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Core.html">Core</a></li><li><a href="Event.html">Event</a></li><li><a href="Plugin.html">Plugin</a></li><li><a href="Uuid.html">Uuid</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:add">add</a></li><li><a href="global.html#event:added">added</a></li><li><a href="global.html#event:allPluginsLoaded">allPluginsLoaded</a></li><li><a href="global.html#event:remove">remove</a></li><li><a href="global.html#event:removed">removed</a></li><li><a href="global.html#event:reset">reset</a></li><li><a href="global.html#event:resetComplete">resetComplete</a></li><li><a href="global.html#event:update">update</a></li><li><a href="global.html#event:updated">updated</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Apr 04 2016 21:04:39 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Apr 18 2016 05:23:29 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

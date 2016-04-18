@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: uuid.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,37 +17,40 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: uuid.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>Core plug-in</h1><p>The core plug-in provides the most basic low-level API methods and events necessary to support other higher-level plug-ins.
-This includes support for events, tracking and manipulating generic items (<code>File</code>/<code>Blob</code>, etc), and loading other plug-ins.</p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>const placeholder = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+
+/**
+ * A new instance of this class creates a version 4 UUID,
+ * which is accessible via the classes toString method.
+ *
+ * @since 0.0.0
+ * @example
+ * const uuid = new Uuid().toString()
+ */
+class Uuid {
+    constructor() {
+        const uuid = placeholder.replace(/[xy]/g, character => {
+            const r = Math.random() * 16 | 0, v = character == 'x' ? r : (r &amp; 0x3 | 0x8)
+            return v.toString(16)
+        })
+
+        this.toString = () => uuid
+    }
+}
+
+export default Uuid
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

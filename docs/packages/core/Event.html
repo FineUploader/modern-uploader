@@ -166,7 +166,9 @@ change in state or proposed change in state in the system.</div>
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last">True to mark this event
+as information. That is, no action can be taken by listeners to affect the
+event.</td>
         </tr>
 
     
@@ -179,7 +181,7 @@ change in state or proposed change in state in the system.</div>
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">*</span>
 
 
             
@@ -353,7 +355,10 @@ const event = new Event({
 
 
 <div class="description">
-    True if the event was cancelled.
+    True if the event was cancelled. Event listeners must short-circuit and not perform
+any intended action associated with an event if it has been cancelled. Also note
+that return values for subsequent listeners are ignored once the event has been
+cancelled.
 </div>
 
 
@@ -404,7 +409,7 @@ const event = new Event({
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="event.js.html">event.js</a>, <a href="event.js.html#line53">line 53</a>
+        <a href="event.js.html">event.js</a>, <a href="event.js.html#line68">line 68</a>
     </li></ul></dd>
     
 
@@ -479,7 +484,7 @@ const event = new Event({
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="event.js.html">event.js</a>, <a href="event.js.html#line64">line 64</a>
+        <a href="event.js.html">event.js</a>, <a href="event.js.html#line79">line 79</a>
     </li></ul></dd>
     
 
@@ -497,7 +502,7 @@ const event = new Event({
 
         
             
-<h4 class="name" id="payload"><span class="type-signature">(readonly) </span>payload<span class="type-signature"> :Object|undefined</span></h4>
+<h4 class="name" id="payload"><span class="type-signature">(readonly) </span>payload<span class="type-signature"> :*</span></h4>
 
 
 
@@ -514,10 +519,7 @@ and mutate the copy.
     <ul>
         <li>
             
-<span class="param-type">Object</span>
-|
-
-<span class="param-type">undefined</span>
+<span class="param-type">*</span>
 
 
         </li>
@@ -559,7 +561,7 @@ and mutate the copy.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="event.js.html">event.js</a>, <a href="event.js.html#line77">line 77</a>
+        <a href="event.js.html">event.js</a>, <a href="event.js.html#line92">line 92</a>
     </li></ul></dd>
     
 
@@ -577,13 +579,22 @@ and mutate the copy.
 
         
             
-<h4 class="name" id="result"><span class="type-signature">(readonly) </span>result<span class="type-signature"> :Object|undefined</span></h4>
+<h4 class="name" id="result"><span class="type-signature">(readonly) </span>result<span class="type-signature"> :Object|Array|undefined</span></h4>
 
 
 
 
 <div class="description">
-    Data provided by the previous event handler.
+    Data provided by the previous event handler. In many, if not most cases,
+this result value, which matches the return value of the most recent
+event listener, replaces the <a href="Event.html#payload">payload</a> specified
+by the creator of the event. Lack of a result indicates that the data
+provided by the event creator is in effect and will be considered by all
+listeners responding to the event. In other words, listeners that want to
+affect the data associated with this event must clone the payload, make
+appropriate changes, and then return this modified copy. Exceptional
+events where this logic is not followed should be documented.
+
 Do NOT mutate the value of this property. Instead, create a deep
 copy and mutate the copy.
 </div>
@@ -595,6 +606,9 @@ copy and mutate the copy.
         <li>
             
 <span class="param-type">Object</span>
+|
+
+<span class="param-type">Array</span>
 |
 
 <span class="param-type">undefined</span>
@@ -639,7 +653,7 @@ copy and mutate the copy.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="event.js.html">event.js</a>, <a href="event.js.html#line94">line 94</a>
+        <a href="event.js.html">event.js</a>, <a href="event.js.html#line118">line 118</a>
     </li></ul></dd>
     
 
@@ -714,7 +728,7 @@ copy and mutate the copy.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="event.js.html">event.js</a>, <a href="event.js.html#line105">line 105</a>
+        <a href="event.js.html">event.js</a>, <a href="event.js.html#line129">line 129</a>
     </li></ul></dd>
     
 
@@ -748,8 +762,17 @@ copy and mutate the copy.
 
 
 <div class="description">
-    Marks this event as cancelled such that it should not
-reach any further registered listeners.
+    Marks this event as cancelled. When an event is cancelled, the event
+will continue to bubble up through the list of registered listeners,
+but the action associated with the event must no longer occur. For example,
+if the "add" event is cancelled, the item to be added must not actually be
+added to the system, but the "add" event will continue to reach all subsequent
+listeners. Return values from subsequent listeners will be ignored for cancelled
+events as well.
+
+Another use case for cancelling an event - a listener that has already performed
+the action associated with the event and want to prevent any subsequent listeners
+from performing any further actions.
 </div>
 
 
@@ -796,7 +819,7 @@ reach any further registered listeners.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="event.js.html">event.js</a>, <a href="event.js.html#line42">line 42</a>
+        <a href="event.js.html">event.js</a>, <a href="event.js.html#line54">line 54</a>
     </li></ul></dd>
     
 
@@ -838,13 +861,13 @@ reach any further registered listeners.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Core.html">Core</a></li><li><a href="Event.html">Event</a></li><li><a href="Plugin.html">Plugin</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Core.html">Core</a></li><li><a href="Event.html">Event</a></li><li><a href="Plugin.html">Plugin</a></li><li><a href="Uuid.html">Uuid</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:add">add</a></li><li><a href="global.html#event:added">added</a></li><li><a href="global.html#event:allPluginsLoaded">allPluginsLoaded</a></li><li><a href="global.html#event:remove">remove</a></li><li><a href="global.html#event:removed">removed</a></li><li><a href="global.html#event:reset">reset</a></li><li><a href="global.html#event:resetComplete">resetComplete</a></li><li><a href="global.html#event:update">update</a></li><li><a href="global.html#event:updated">updated</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Apr 04 2016 21:04:39 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Apr 18 2016 05:23:29 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

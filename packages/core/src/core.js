@@ -40,16 +40,16 @@ const stores = new WeakMap()
  * @since 0.0.0
  * @example
  * // add a single item, ID will be generated
- * new Event({
+ * api.fire(new Event({
  *    type: 'add',
  *    payload: {
  *       item: blob1,
  *       name: 'cat photos'
  *    }
- * })
+ * }))
  *
  * // add multiple items, IDs will be generated
- * new Event({
+ * api.fire(new Event({
  *    type: 'add',
  *    payload: [
  *       {
@@ -61,7 +61,7 @@ const stores = new WeakMap()
  *          name: 'dog photos'
  *       }
  *    ]
- * })
+ * }))
  */
 
 /**
@@ -99,22 +99,22 @@ const stores = new WeakMap()
  * @since 0.0.0
  * @example
  * // remove a single item w/ an ID of 12345
- * new Event({
+ * api.fire(new Event({
  *    type: 'remove',
  *    payload: 12345
- * })
+ * }))
  *
  * // another way to remove a single item w/ an ID of 12345
- * new Event({
+ * api.fire(new Event({
  *    type: 'remove',
  *    payload: [12345]
- * })
+ * }))
  *
  * // remove two items w/ an IDs of 12345 and 67890 respectively
- * new Event({
+ * api.fire(new Event({
  *    type: 'remove',
  *    payload: [12345, 67890]
- * })
+ * }))
  */
 
 /**
@@ -133,6 +133,11 @@ const stores = new WeakMap()
  * @event reset
  * @type {Event}
  * @since 0.0.0
+ * @example
+ * // reset the system
+ * api.fire(new Event({
+ *    type: 'reset'
+ * }))
  */
 
 /**
@@ -145,10 +150,35 @@ const stores = new WeakMap()
  */
 
 /**
- * Requests that an existing item record be updated. Specifics TBD.
+ * Requests that a specific item be updated. The properties included in the event payload
+ * will replace any existing properties on the matching item. If specified properties do not yet
+ * exist, they will be added. The item to update must be specified with an `id` property
+ * in the event payload.
  *
- * @event updateData
+ * @event update
  * @type {Event}
+ * @property {Event#payload} payload - The properties to update on the target item.
+ * @property {(string|number)} payload.id - The ID of the item to update.
+ * @since 0.0.0
+ * @example
+ * // change the name of an item w/ and ID of 123
+ * api.fire(new Event({
+ *    type: 'update',
+ *    payload:  {
+ *       id: 123,
+ *       name: 'this is my new name'
+ *    }
+ * }))
+ */
+
+/**
+ * Indicates that a specific item has been updated. The payload describes the event that has
+ * been updated (via the ID property) along with the updated properties.
+ *
+ * @event updated
+ * @type {Event}
+ * @property {Event#payload} payload - Describes changes made to a specific item.
+ * @property {(string|number)} payload.id - The ID of the item that was updated.
  * @since 0.0.0
  */
 
@@ -157,8 +187,14 @@ const stores = new WeakMap()
  *
  * @extends Plugin
  * @listens add
+ * @listens remove
+ * @listens reset
+ * @listens update
  * @fires allPluginsLoaded
  * @fires added
+ * @fires removed
+ * @fires resetComplete
+ * @fires updated
  * @since 0.0.0
  * @example
  * import Core from 'core'

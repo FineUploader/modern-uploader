@@ -40,6 +40,11 @@ class Store {
         const entriesMap = entries.get(this)
         delete entriesMap[id]
     }
+
+    update(id, dataToUpdate) {
+        const entry = entries.get(this)[id]
+        this.addEntry(mergeOptions(entry, dataToUpdate))
+    }
 }
 
 export default Store

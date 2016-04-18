@@ -3,7 +3,7 @@ import Event from './event'
 function observeRemove(api, store) {
     api.on('remove', event => {
         if (!event.cancelled) {
-            let idOrIds = event.result || event.payload
+            const idOrIds = event.result || event.payload
             removeEntries({
                 ids: [].concat(idOrIds),
                 api,

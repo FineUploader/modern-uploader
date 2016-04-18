@@ -3,6 +3,10 @@ import objectAssign from 'object-assign'
 function deliverEvent(event, listeners) {
     const listenersForEventType = listeners[event.type] || listeners['*']
     if (listenersForEventType) {
+        if (event.informational) {
+            deliverInformationToListeners(event, listeners)
+        }
+
         return deliverEventToListener(event, objectAssign([], listenersForEventType))
     }
 
@@ -46,6 +50,12 @@ function deliverEventToListener(event, listeners) {
             }
         }
     })
+}
+
+function deliverInformationToListeners(event, listeners) {
+    for (let index = listeners.length - 1; index >= 0; index--) {
+        listeners[index](event)
+    }
 }
 
 export default deliverEvent

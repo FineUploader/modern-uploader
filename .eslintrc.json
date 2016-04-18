@@ -12,7 +12,8 @@
         "describe": true,
         "expect": true,
         "it": true,
-        "jasmine": true
+        "jasmine": true,
+        "spyOn": true
     },
     "parserOptions": {
         "sourceType": "module"

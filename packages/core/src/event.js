@@ -20,10 +20,12 @@ class Event {
      * Create a new Event.
      *
      * @param {Object} eventData
-     * @param {boolean} [eventData.informational=false]
-     * @param {Object} [eventData.payload] Data associated with this event
+     * @param {boolean} [eventData.informational=false] True to mark this event
+     * as information. That is, no action can be taken by listeners to affect the
+     * event.
+     * @param {*} [eventData.payload] - Data associated with this event
      * from the entity that triggered the event.
-     * @param {string} eventData.type Type of event to fire.
+     * @param {string} eventData.type - Type of event to fire.
      * @since 0.0.0
      */
     constructor({informational = false, payload, type}) {
@@ -35,8 +37,18 @@ class Event {
     }
 
     /**
-     * Marks this event as cancelled such that it should not
-     * reach any further registered listeners.
+     * Marks this event as cancelled. When an event is cancelled, the event
+     * will continue to bubble up through the list of registered listeners,
+     * but the action associated with the event must no longer occur. For example,
+     * if the "add" event is cancelled, the item to be added must not actually be
+     * added to the system, but the "add" event will continue to reach all subsequent
+     * listeners. Return values from subsequent listeners will be ignored for cancelled
+     * events as well.
+     *
+     * Another use case for cancelling an event - a listener that has already performed
+     * the action associated with the event and want to prevent any subsequent listeners
+     * from performing any further actions.
+     *
      * @since 0.0.0
      */
     cancel() {
@@ -44,7 +56,10 @@ class Event {
     }
 
     /**
-     * True if the event was cancelled.
+     * True if the event was cancelled. Event listeners must short-circuit and not perform
+     * any intended action associated with an event if it has been cancelled. Also note
+     * that return values for subsequent listeners are ignored once the event has been
+     * cancelled.
      *
      * @type {boolean}
      * @since 0.0.0
@@ -70,7 +85,7 @@ class Event {
      * Do NOT mutate the value of this property. Instead, create a deep copy
      * and mutate the copy.
      *
-     * @type {(Object|undefined)}
+     * @type {*}
      * @since 0.0.0
      * @readonly
      */
@@ -83,12 +98,21 @@ class Event {
     }
 
     /**
-     * Data provided by the previous event handler.
+     * Data provided by the previous event handler. In many, if not most cases,
+     * this result value, which matches the return value of the most recent
+     * event listener, replaces the [payload]{@link Event#payload} specified
+     * by the creator of the event. Lack of a result indicates that the data
+     * provided by the event creator is in effect and will be considered by all
+     * listeners responding to the event. In other words, listeners that want to
+     * affect the data associated with this event must clone the payload, make
+     * appropriate changes, and then return this modified copy. Exceptional
+     * events where this logic is not followed should be documented.
+     *
      * Do NOT mutate the value of this property. Instead, create a deep
      * copy and mutate the copy.
      *
+     * @type {(Object|Array|undefined)}
      * @since 0.0.0
-     * @type {(Object|undefined)}
      * @readonly
      */
     get result() {

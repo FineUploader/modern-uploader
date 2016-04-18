@@ -25,7 +25,7 @@ commitDocsOnly:
 docs:
 	rm -rf _docs
 	for packageDir in packages/*/ ; do \
-		$(NPM_BIN)/jsdoc $$packageDir -r -d _docs/$$packageDir --readme $$packageDir/README.md ; \
+		$(NPM_BIN)/jsdoc $$packageDir/src -r -d _docs/$$packageDir --readme $$packageDir/README.md ; \
 	done
 	cp -pR docs-static/* _docs
 

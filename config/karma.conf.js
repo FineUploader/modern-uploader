@@ -39,7 +39,6 @@ var path = require('path'),
         }
     }
 
-webpackConfig.module.loaders[0].query = {plugins: ['rewire']};
 webpackConfig.devtool = 'inline-source-map'
 
 module.exports = function (config) {

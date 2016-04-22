@@ -40,6 +40,11 @@ publicDocs:
 	@echo Not a master build, won't publish docs update.
 endif
 
+publish: update test buildDist buildLib
+	for packageDir in packages/*/ ; do \
+		(cd $$packageDir && npm publish) ; \
+	done
+
 test: lint
 ifeq ($(CI), true)
 	$(NPM_BIN)/karma start config/karma.conf.js
@@ -54,3 +59,6 @@ travisDocsSetup:
 	@git remote add origin "https://${GH_TOKEN}@${GH_REF}"
 	git fetch --all
 	git checkout master
+
+update:
+	npm install

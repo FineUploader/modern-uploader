@@ -1,6 +1,6 @@
 {
   "name": "@modern-uploader/core",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Core module for Modern Uploader",
   "author": "Widen Enterprises, Inc.",
   "homepage": "https://github.com/FineUploader/modern-uploader",
@@ -21,7 +21,7 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "merge-options": "latest",
-    "object-assign": "latest"
+    "merge-options": "0.0.64",
+    "object-assign": "4.0.1"
   }
 }

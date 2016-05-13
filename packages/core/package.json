@@ -1,15 +1,10 @@
 {
   "name": "@modern-uploader/core",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Core module for Modern Uploader",
   "author": "Widen Enterprises, Inc.",
   "homepage": "https://github.com/FineUploader/modern-uploader",
-  "licenses": [
-    {
-      "type": "Widen Commercial License",
-      "url": "https://raw.githubusercontent.com/FineUploader/modern-uploader/LICENSE"
-    }
-  ],
+  "license": "MIT",
   "repository": "https://github.com/FineUploader/modern-uploader/tree/master/packages/core",
   "keywords": [
     "file",

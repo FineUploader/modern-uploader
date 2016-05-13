@@ -1,11 +1,6 @@
 {
   "private": true,
-  "licenses": [
-    {
-      "type": "Widen Commercial License",
-      "url": "https://raw.githubusercontent.com/FineUploader/modern-uploader/LICENSE"
-    }
-  ],
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "latest",
     "babel-core": "latest",

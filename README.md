@@ -6,7 +6,7 @@
 
 A modern and highly extensible JavaScript file upload library with support for all servers and applications
 
-** UPDATE: This project is on-hold for the moment. My free time is better spent developing [react-fine-uploader](https://github.com/FineUploader/react-fine-uploader) for now. **
+**UPDATE: This project is on-hold for the moment. My free time is better spent developing [react-fine-uploader](https://github.com/FineUploader/react-fine-uploader) for now.**
 
 ## Plug-ins
 

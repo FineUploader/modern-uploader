@@ -1,6 +1,6 @@
 # Modern Uploader
 
-[![Freenode](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](irc://chat.freenode.net/#fineuploader)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/modernuploader.svg)](https://saucelabs.com/u/modernuploader)
 

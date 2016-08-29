@@ -3,7 +3,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
     entry: {
-        core: [path.resolve('packages/core/src')]
+        core: [path.resolve('packages/core/src')],
+        logger: [path.resolve('packages/logger/src')]
     },
     output: {
         path: path.resolve('packages'),
@@ -11,7 +12,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            core: path.resolve('packages/core/src')
+            core: path.resolve('packages/core/src'),
+            logger: path.resolve('packages/logger/src')
         }
     },
     module: {

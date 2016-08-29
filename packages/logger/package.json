@@ -1,0 +1,21 @@
+{
+  "name": "@modern-uploader/logger",
+  "version": "1.0.0",
+  "description": "Logger plug-in for Modern Uploader",
+  "author": "Widen Enterprises, Inc.",
+  "homepage": "https://github.com/FineUploader/modern-uploader",
+  "license": "MIT",
+  "repository": "https://github.com/FineUploader/modern-uploader/tree/master/packages/logger",
+  "keywords": [
+    "file",
+    "blob",
+    "file-uploader",
+    "fine-uploader",
+    "upload",
+    "widget"
+  ],
+  "main": "lib/index.js",
+  "peerDependencies": {
+    "@modern-uploader/core": "1.x"
+  }
+}

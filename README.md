@@ -10,7 +10,8 @@ A modern and highly extensible JavaScript file upload library with support for a
 
 ## Plug-ins
 
-- [Core](packages/core): [![npm](https://img.shields.io/npm/v/@modern-uploader/core.svg)](https://www.npmjs.com/package/@modern-uploader/core)
+- [Core](packages/core): [![npm](https://img.shields.io/npm/v/@modern-uploader/core.svg)](https://www.npmjs.com/package/@modern-uploader/core)  
+- [Logger](packages/logger): [![npm](https://img.shields.io/npm/v/@modern-uploader/logger.svg)](https://www.npmjs.com/package/@modern-uploader/logger)
 
 ## License
 

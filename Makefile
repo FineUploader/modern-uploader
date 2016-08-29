@@ -1,3 +1,5 @@
+.PHONY: test
+
 NPM_BIN = $(shell npm bin)
 
 build: buildLib buildDist
